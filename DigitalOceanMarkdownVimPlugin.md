@@ -1,503 +1,652 @@
+# How to Make DigitalOcean Markdown Vim Plugin
 
-# How to Create a DigitalOcean Markdown Vim Plugin
-This tutorial is for the intermediate-level vim user who wants to expand his or her knowledge and skill with vim.
+### Introduction
 
-The basics of vim are great, but they will only get you so far. The real power of vim lies in its potential for customization via its scripting language, VimL.  This tutorial will walk you through creating a plugin that runs a Linux command--in this case, python3--and displays the output in a pane docked at the bottom of the window.   The goal is to show you how this is done under the hood, this way you can use this knowledge to craft your own plugins.  When you are done with this tutorial, you will have experience with the following:
+Welcome to the world of vim plugins. In this tutorial you will create a plugin for generating markdown–specifically, DigitalOcean markdown–by exposing a set of insert-mode mappings for efficient markdown creation. Additionally, you will create a function that uses a vim API to search and reposition the cursor.
 
 ## Prerequisites
-- A working understanding of how to operate a Linux command line terminal.  The DigitalOcean tutorial [A Linux Command Line Primer](https://www.digitalocean.com/community/tutorials/a-linux-command-line-primer) is a great place to start.
-- An intermediate skill level using Vim. This tutorial builds on the skills you read about in[How To Use Vim for Advanced Editing of Plain Text or Code on a VPS](https://www.digitalocean.com/community/tutorials/how-to-use-vim-for-advanced-editing-of-plain-text-or-code-on-a-vps-2).
 
-## Setting Everything Up
+- You should be comfortable using a Linux terminal. Have a look at [An Introduction to the Linux Terminal](https://www.digitalocean.com/community/tutorials/an-introduction-to-the-linux-terminal).
+- Experience using vim and some knowledge about creating mappings. Here is a good resource for that: [How To Use Vim for Advanced Editing of Plain Text or Code on a VPS](https://www.digitalocean.com/community/tutorials/how-to-use-vim-for-advanced-editing-of-plain-text-or-code-on-a-vps-2).
 
-Let’s begin by installing vim and setting up the appropriate directories and files. Enter the following commands to install vim:
+## Setting Up Plugin Files and Directories
 
-```command
-sudo apt-get update
-sudo apt-get install vim-gtk3
+In this section you will install vim and set up all the requisite files and directories. Let’s begin by installing vim.
+
+## Step One -- Installing Vim
+
+Install vim using the following command:
+
+```sh
+sudo apt update
+sudo apt install vim-gtk3
 ```
 
-Your main vim configuration file is called `.vimrc`.  If it doesn't already exist, create one in your home directory using the following command:
+You can verity the vim version using the following command:
 
-```command
-touch ~/.vimrc
+```sh
+vim --version
 ```
 
-Vim uses a special `~/.vim` directory to store additional files like your plugin. Use the following command to create it as well as the plugin sub-directory:
+## Step Two -- Creating `.vimrc` and `.vim` Directories
+
+You need a `.vimrc` file and a `.vim/plugin` directory structure. `.vimrc` is a configuration file with settings like mappings, syntax highlighting, and line numbers. Let’s create it first.
+
+Change to your home directory using the following command:
+
+```sh
+cd
+```
+
+Use the `ls -al` command to look for `.vimrc` and `.vim`. If you don’t see one or the other, you will create them. Let’s assume you don’t see them, so you’ll create them. Use the following command to create `.vimrc`:
+
+```sh
+touch .vimrc
+```
+
+Use`mkdir` with a `-p` flag to create both the `.vim` and `.vim/plugin` folders:
 
 ```sh
 mkdir -p ~/.vim/plugin
 ```
 
-<$>[note]
-**Note:** The `-p` argument to `mkdir` creates both the parent as well as the child folder even if the parent folder doesn't exist.
-<$>
+Your plugin goes in `~/.vim/plugin` and can be composed of a single file or a directory with multiple files. Your plugin will have multiple files, so create a directory for it using the following command:
 
-<$>[note]
-**Note:** The `~/.vim` folder likely won't exist after a fresh install of vim.
-<$>
-
-Create your plugin file using the following commands:
-
-```command
-cd !$
-touch ~/.vim/plugin/run_command.vim
+```sh
+mkdir ~/.vim/plugin/do_markdown
 ```
 
-<$>[note]
-**Note:** The `!$` keyword represents the last directory created.
-<$>
+## Step Three –- Creating and Sourcing Plugin File
 
-You need to modify your `.vimrc` file.  Open it using the following command:
+Change to your plugin directory and create your plugin file `do_markdown.vim` using the following commands:
+
+```sh
+cd ~/.vim/plugin/do_markdown
+touch do_markdown.vim
+```
+
+To activate your plugin every time vim starts up, you need to modify `.vimrc` and source it. Edit `.vimrc` using the following command:
 
 ```sh
 vim ~/.vimrc
 ```
 
-Link your plugin file to the plugin file using the `source` command. Go to the end of the file and add the following lines:
+Add the following line of code to the end of the file:
 
 ```vim
-source /workspaces/blank-codespace/.vim/plugin/run_command.vim
+source ~/.vim/plugin/do_markdown/do_markdown.vim
+```  
+
+Save and exit vim using the `:x` command Good job! You just created all the plugin boilerplate.
+
+## Building the Plugin
+
+Markdown is a language used to format text documents with basic styles like headings, bold and italic, and block quotes. For instance, you can make text bold by surrounding–or bracketing–it with double asterisks as in \*\*Alert**.
+
+DigitalOcean (DO) has its own cool looking markdown that works well with formatting code blocks and callouts. This plugin will generate DO markdown.
+
+> **Note:** This plugin only generates a subset of the DO markdown. Feel free to add the rest!
+
+This plugin creates two types of markdown: brackets and blocks. Brackets surround a string of text with symbols that apply formatting to it, and blocks are multiline sections of text enclosed in symbols. Let’s tackle brackets first.
+
+### What Are Mappings?
+
+Your plugin exposes a collection of mappings. A mapping is a shortcut that automates some repetitive task. Working efficiently is all about reducing keystrokes, and that is exactly what mappings do for you. As you know, vim has multiple modes of operation: insert, normal, command, and visual. Well, you can create mappings for each mode: imap, nmap, cmap, and vmap. For simplicity, this article refers to all of these generically as mappings.
+
+## Step One -- Creating Bracket Mappings
+
+It’s tedious to repeatedly type closing brackets, so your plugin will generate the closing bracket for you and move the cursor between the brackets. Change to your plugin’s directory and edit your plugin file using the following commands:
+
+```sh
+cd ~/.vim/plugin/do_markdown
+vim do_markdown.vim
 ```
-<$>[note]
-**Note:** `/workspaces/blank-codespace` is the default directory in a fresh, blank GitHub codespace.
-<$>
-Save and exit using the `x` command.
 
-## How It Works
-The best way to understand how this plugin works is the walk through its main use cases, starting with the basic success path. First, you will a python file using the following bash command:
+Enter the following code to the bottom of the file:
 
+```vim
+inoremap ** ****<left><left>
+```
+
+The following table shows what happens when you test the imap by entering insert-mode and typing `**`:
+
+> **Note:** The **_** character represents the cursor location.
+
+| Type: | Result         |
+|-------|----------------|
+| \*\*  | \*\***_**\**     |
+
+As the table illustrates, when you type `**` in insert-mode, the mapping inserts four `*` characters and places the cursor between both pairs.
+
+### A Problem With This Map
+
+There is a problem with this imap: Once you finish typing `Note:` the cursor remains between the brackets as follows:
+
+\*\*Note:**_**\**
+
+Now you have to use `<esc>A` to move past the closing bracket. Wouldn’t it be easier if instead you could stay in insert-mode , type `;;`, and achieve the same thing--moving the cursor to the end of the line in insert-mode? Fortunately, you can create an imap to do this. The problem with using `<esc>A` is you have to move your hand off the home row, reach up and press `<esc>`, reposition your hand on the home row, then do a `<shift>a`. With an imap all you do is move your right pinky finger over slightly and press `;;`. Add the following imap to your plugin:
+
+```vim
+inoremap ;; <esc>A
+```
+
+The following table illustrates the result of using imap `;;` in conjunction with the bracket `imap **`. Begin by entering insert-mode.
+
+| Step | Type: | Result         |
+|------|-------|----------------|
+| 1.   | \*\*  | \*\***_**\**     |
+| 2.   | Note: | \*\*Note:**_**\** |
+| 3.   | ;;    | \*\*Note:\****_** |
+
+Observe the position of the cursor **`_`** during each step. When you test these macros, you’ll see what I mean firsthand.
+
+There is another problem to solve: After typing `;;` you still have to tap `<space>` at the end. If you type `**` in insert-mode, and then type "Don't forget to save", this is what will happen:
+
+\*\*Note:\**Don't forget to save
+
+It's somewhat hard to notice, but there is no whitespace before "Don't". We need a space after it.
+
+\*\*Note:\** Don't forget to save
+
+To insert a space after \*\*Note:**, update the imap as follows:
+
+```vim
+inoremap ** ****<space><esc>2hi
+```
+
+### Mappings
+
+Finally, here are all of the bracket imaps in this plugin. Copy them into your plugin file.
+
+| map                                            | Type | Result  |
+|--------------------------------------------    |------|---------|
+| inoremap ** ****<space><esc>2hi  | \*\* | \*\***_**\*\* |
+|inoremap \` \``<space><left><left>         | \`   | \`**_**\`   |
+| inoremap _ __<space><left><left>            | _    | __     |
+| inoremap ^ \<^>\<^><space><esc>3hi | ^    | \<^>**_**<^> |
+
+Save and exit using the following vim command:
+
+```vim
+:wq
+```
+
+### Updated `do_markdown.vim`
+
+```vim
+" UTILITIES
+inoremap ;; <esc>A
+nnoremap <F4> <esc>:w<cr>:so %<cr>
+
+" BRACKETS
+inoremap ** ****<space><esc>2hi
+inoremap ` ``<space><left><left>
+inoremap _ __<space><left><left>
+inoremap ^ < ^><^><space><esc>3hi
+```
+
+## Step Two – Creating Block Templates and Mappings
+
+Now you’ll create your block imaps, which generate multiline blocks of text using simple parameterized templates. Consider the following DO markdown code block:
+
+````
 ```sh
 vim test.py
 ```
+````
 
-This is the initial screen:
+You will create a template that substitutes XXX in sections that you will edit. Create a template named `code.txt` using the following command.
 
-[initial-screen]
+```sh
+vim code.txt
+```
 
-Run the plugin using the following vim command:
+Enter the following text:
+
+```
+...XXX
+XXX
+...
+```
+
+Save and close the file using the following vim command:
 
 ```vim
-:call RunCommand('python3')
+:wq
 ```
 
-Here is the screen with the output of the python script in a pane docked at the bottom of the window:
+Reopen your plugin file using the following command:
 
-[output-screen]
-
-Now, let's say the vim window is split into multiple panes and buffers before you run the python script, as below:
-
-[multple-panes-open]
-
-As you can see, there are multiple panes open.  Therefore, your plugin will close every pane and buffer first, and then it will execute the python script.  For this reason your plugin will expose two functions: `ClearAllBuffers` and `RunCommand`.
-
-## Step One - Creating the Scaffolding Code
-
-It is time to start building your plugin.  Open the plugin file in vim with the following command:
-
-```command
-vim ~/.vim/plugin/run_command.vim
+```sh
+vim do_markup.vim
 ```
-Your vim plugin is comprised of two functions: `ClearAllBuffers` and `RunCommand`. Create the following scaffolding code to your plugin:
+
+Now you will make an imap that reads the template file into the active buffer. Add this to your plugin:
 
 ```vim
-function! ClearAllBuffers()
-    echo "In ClearAllBuffers()"
-endfunction
-
-function! RunCommand(command)
-    echo "In RunCommand()"
-endfunction
+inoremap code<cr> <esc>:read code.txt<cr>kdd
 ```
 
-Every time you save your plugin, use the command-line commands `w`, then `so %`.  Doing so will source the current changes in the file.  Otherwise, you would have to save and then reopen the file.
+> **Note:** The normal-mode `kdd` command deletes the blank line that gets added when you read file contents in.
 
-<$>[note]
-**Note:** `%` is a special vim command that refers to the current file.
-<$>
+Test it by entering insert-mode and typing `code<cr>`. It should dump the contents of `code.txt` at the cursor.
 
-Test the scaffolding code using `call RunCommand('python3')`. You should see the message "`In RunCommand`" in the vim output:
-
-```
-[label Output]
-
-In RunCommand
-```
-Good. Your scaffolding code is set up.
-
-## Step Two - Making `ClearAllBuffers` Function
-
-Let's create the `ClearAllBuffers` function first, which does the following:
-1. Closes all window panes except the current one.
-2. Clears all buffers except the current one.
-
-<$>[note
-Remember: Every time you run a python script, you first reset vim such that there is only one buffer and no panes open.
-<$>
-The first thing you need to do is save the currently opened file name stored in the `@%` buffer.  Later in the code you will lose access to this.
-
-YYYYYYYYYYYYYYYYYY
+### Updated `do_markdown.vim`
 
 ```vim
-function! ClearAllBuffers()
+" UTILITIES
+inoremap ;; <esc>A
+nnoremap <F4> <esc>:w<cr>:so %<cr>
 
-    " Save current filename, as it will be lost after clearing all buffers.
-    let temp_filename = @%
+" BRACKETS
+inoremap ** ****<space><esc>2hi
+inoremap ` ``<space><left><left>
+inoremap _ __<space><left><left>
+inoremap ^ < ^><^><space><esc>3hi
 
-endfunction
+" BLOCKS
+inoremap code<cr> <esc>:read code.txt<cr>kdd
 ```
 
-<$>[note]
-**Note:** The `@%` buffer stores the open file name.
-<$>
+Here is the most tedious part. You need to create all of the templates for all of the block imaps. Here are the download links for each file:
 
-Save the current file using  `silent w`, which suppresses vim output. If there is too much output, you will have to press the `Enter` key to clear it every time you run `ClearAllBuffers`.
+[code.txt](https://github.com/boonecabaldev)
+[out.txt](https://github.com/boonecabaldev)
+[lab.txt](https://github.com/boonecabaldev)
+[crp.txt](https://github.com/boonecabaldev)
+[ecod.txt](https://github.com/boonecabaldev)
+[elab.txt](https://github.com/boonecabaldev)
+[eout.txt](https://github.com/boonecabaldev)
+[ecpr.txt](https://github.com/boonecabaldev)
+[nowa.txt](https://github.com/boonecabaldev)
+[note.txt](https://github.com/boonecabaldev)
+[warn.txt](https://github.com/boonecabaldev)
+[info.txt](https://github.com/boonecabaldev)
+[drft.txt](https://github.com/boonecabaldev)
+[col.txt](https://github.com/boonecabaldev)
+[dets.txt](https://github.com/boonecabaldev)
+
+You will create the rest of the block imaps later in the tutorial.
+
+## Step Three -- Making Function to Load Templates
+
+You’re going to make a lot of these imaps, so it wouldn’t hurt to use the following function to avoid code duplication. Add this to your plugin:
 
 ```vim
-function! ClearAllBuffers()
+function LoadTemplate(template_filename)
 
-    let temp_filename = @%
-
-    " Save current filename.
-    silent w
+  silent execute 'read ' . a:template_filename
+  normal kdd
 
 endfunction
 ```
 
-Close all open buffers using `%bd!`.  After clearing all buffers, `@%` won't have the current file because all the buffers are closed, and the active buffer has reset.  To reiterate, this is why you saved the filename in a temporary variable.
+Update your `imap code<cr>` to invoke `LoadTemplate` as follows:
 
 ```vim
-function! ClearAllBuffers()
-
-    let temp_filename = @%
-    silent w
-
-    " Close all buffers.
-    %bd!
-
-endfunction
+inoremap code<cr> <esc>:call LoadTemplate('code.txt')<cr>
 ```
-<$>[note]
-**Note:** `%` applies the command to all lines in the buffer, and the `!` forces the command without any prompts.
-<$>
 
-Read the previously opened file into the current buffer using `execute "read " . temp_filename`.  You are using `execute` to construct a command string to run.
+This is the basic structure you will use to create all of the block imaps in this plugin.
+
+### Updated `do_markdown.vim`
 
 ```vim
-function! ClearAllBuffers()
+" UTILITIES
+inoremap ;; <esc>A
+nnoremap <F4> <esc>:w<cr>:so %<cr>
 
-    let temp_filename = @%
-    silent w
-    %bd!
+function LoadTemplate(template_filename)
 
-    " Read the file back into the current buffer.
-    execute "read " . temp_filename
+  silent execute 'read ' . a:template_filename
+  normal kdd
 
 endfunction
+
+" BRACKETS
+inoremap ** ****<space><esc>2hi
+inoremap ` ``<space><left><left>
+inoremap _ __<space><left><left>
+inoremap ^ < ^><^><space><esc>3hi
+
+" BLOCKS
+inoremap code<cr> <esc>:call LoadTemplate('code.txt')<cr>
 ```
 
-Move the cursor up one line with normal-mode `k`, then delete the line under the cursor with `dd`. When you read the contents of the file, there is a blank line above the content and cursor; therefore, you are moving the cursor up and deleting it.
+## Step Four – Creating Cursor Movement Function
+
+After inserting the template file contents into the buffer, the next step is to move the cursor to the next XXX and replace it with the cursor in insert-mode. To accomplish this, you are going to create a function named `ToEndOrNext` that does the job of your `imap ;;` plus the aforementioned functionality. Below is the pseudo code for it:
+
+```text
+If there is no template_param in the file
+  Move cursor to end of line in insert-mode
+Else
+  Move cursor to next template_param
+Replace template_param with cursor in insert-mode
+```
+
+Add the following code to your plugin:
 
 ```vim
-function! ClearAllBuffers()
+function ToEndOrNext(template_param)
 
-    let temp_filename = @%
-    silent w
-    %bd!
-    execute "read " . temp_filename
-
-    " After you open python file using read it will prepend a blank line at the op.  Delete it.
-    normal kdd
+  if search(a:template_param, 'n')
+    execute "normal! /" . a:template_param . "\r"
+    normal diw
+    startinsert!
+  else
+    startinsert
+  endif
 
 endfunction
+
 ```
 
-Save the open file the last time again using `silent execute "w! " . temp_filename`.
+This uses the `search` VimL API to search for `template_param`. Using the `n` option allows you to search for a string without moving the cursor to the match–a look-ahead search, if you will.
+
+Let’s test it. Save and source the plugin using the following vim commands:
 
 ```vim
-function! ClearAllBuffers()
-
-    let temp_filename = @%
-    silent w
-    %bd!
-    execute "read " . temp_filename
-    normal kdd
-
-    " Save the file.
-    silent execute "w! " . temp_filename
-
-endfunction
+:w
+:so %
 ```
 
-Optionally print a success message.
+Create a new buffer using the following vim command:
 
 ```vim
-function! ClearAllBuffers()
-
-    let temp_filename = @%
-    silent w
-    %bd!
-    execute "read " . temp_filename
-    normal kdd
-    silent execute "w! " . temp_filename
-
-    echo "Well done, friend.  Now leave, please"
-
-endfunction
+:new
 ```
 
-## Step Three -- Testing the `ClearAllBuffers` Function
-
-Let's test `ClearAllBuffers`.  Create multiple panes and buffers using the `sp` command two times.  The window should look like the following:
-
-[three-panes]
-
-Call the function using `call ClearAllBuffers()`.  All the panes should be gone.  Additionally, confirm all the buffers are closed using `buffers`.  There should only be one buffer.
-
-## Step Four -- Creating the `RunCommand` Function
-
-Let's start coding `RunCommand`.  First, clear all buffers and close all window panes using `ClearAllBuffers`.  As mentioned in the _How It Works_ section, you close all buffers and panes first because you could potentially have multiple panes open already.
+Enter insert-mode and type `code<cr>`. This will read in the `code.txt` template. Now, use the following vim command to test `ToEndOrNext`:
 
 ```vim
-function! RunCommand(command)
-
-    call ClearAllBuffers()
-
-endfunction
+:call ToEndOrNext('XXX')
 ```
 
-Save the open python file name into a temporary variable.
+The cursor should have replaced the first XXX.  Use `:call ToEndOrNext('XXX')` again.  The next XXX should be replaced by the cursor. At this point both XXX strings should be gone. Now test `ToEndOrNext` by moving the cursor to the middle of a line, enter insert-mode, then use `<esc>:call ToEndOrNext('XXX')<cr>`. The cursor should move to the end of the line in insert-mode.
 
+Next, update your `imap ;;` to invoke `ToEndOrNext` as follows:
 
 ```vim
-function! RunCommand(command)
-
-    " Save the open file name
-    let temp_filename = @%
-
-endfunction
+inoremap ;; <esc>:call ToEndOrNext('XXX')<cr>
 ```
 
-Create a pane using `sp` command.  At this point the cursor will be in the top pane; we want it in bottom pane. After executing `sp` the bottom pane will be a duplicate of the top pane, and both will have the python file opened. 
+Almost there. After you load a template using `imap code<cr>`, you want it to move to the next XXX and replace it with the cursor in insert-mode.  Hence, you call `ToEndOrNext` from within `LoadTemplate`.
+
+### Updated `do_markdown.vim`
 
 ```vim
-function! RunCommand(command)
+" UTILITIES
+inoremap ;; <esc>:call ToEndOrNext('XXX')<cr>
+nnoremap <F4> <esc>:w<cr>:so %<cr>
 
-    let temp_filename = @%
-    call ClearAllBuffers()
+function LoadTemplate(template_filename)
 
-    " Create bottom pane for python output. This leaves cursor in top pane. We
-    " want cursor to be in bottom pane.
-    sp
-
-endfunction
-```
-
-Move the cursor to the bottom pane using `wincmd j`.
-
-```vim
-function! RunCommand(command)
-
-    let temp_filename = @%
-    call ClearAllBuffers()
-    sp
-
-    " Move cursor to bottom pane.
-    wincmd j
+  silent execute 'read ' . a:template_filename
+  normal kdd
+  
+  call ToEndOrNext('XXX')
 
 endfunction
-```
 
-Create a fresh buffer in the bottom pane using `enew`. 
+function ToEndOrNext(template_param)
 
-```vim
-function! RunCommand(command)
-
-    let temp_filename = @%
-    call ClearAllBuffers()
-    sp
-    wincmd j
-
-    " Create a fresh buffer in the bottom pane.
-    enew
+  if search(a:template_param, 'n')
+    execute "normal! /" . a:template_param . "\r"
+    normal diw
+    startinsert!
+  else
+    startinsert
+  endif
 
 endfunction
+
+" BRACKETS
+inoremap ** ****<space><esc>2hi
+inoremap ` ``<space><left><left>
+inoremap _ __<space><left><left>
+inoremap ^ < ^><^><space><esc>3hi
+
+" BLOCKS
+inoremap code<cr> <esc>:call LoadTemplate('code.txt')<cr>
 ```
 
-Execute the python file and read its output it into the bottom buffer.  Notice you are using the temporary filename `temp_filename` you saved earlier.
+## Tying It All Together
 
-```vim
-function! RunCommand(command)
+The final step is to create the rest of your block imaps.  Remember when you downloaded all of the template files earlier?  Now it is only a matter of calling your `LoadTemplate` function, passing the name of the template file. Here is your complete plugin with the block imaps and everything else:
 
-    let temp_filename = @%
-    call ClearAllBuffers()
-    sp
-    wincmd j
-    enew
+### Blocks
 
-    " Execute the python file and read it into the bottom 
-    " buffer.
-    silent execute "!" . a:command . " . temp_filename
+`inoremap code<cr> <esc>:call LoadTemplate('code.txt')<cr>`
 
-endfunction
+##### code.txt
+
+````
+```_
+XXX
 ```
+````
 
-Again there is a blank line above the python output.  Delete it again using `normal kdd`.
+`inoremap out<cr> <esc>:call LoadTemplate('out.txt')<cr>`
 
-```vim
-function! RunCommand(command)
+##### out.txt
 
-    let temp_filename = @%
-    call ClearAllBuffers()
-    sp
-    wincmd j
-    enew
-    silent execute "!" . a:command . " . temp_filename
-
-    " Delete the blank line above the python output.
-    normal kdd
-
-endfunction
-```
-
-Finally, move the cursor back up to the top pane using the `wincmd p`.  Your python file will be opened there.
-
-```vim
-function! RunCommand(command)
-
-    let temp_filename = @%
-    call ClearAllBuffers()
-    sp
-    wincmd j
-    enew
-    silent execute "!" . a:command . " . temp_filename
-    normal kdd
-
-    " Move cursor back up to top pane
-    wincmd p
-
-endfunction
-```
-
-You are done.  Save the file and close it with `x`.
-
-## Step Five -- Testing the `RunCommand` Function
-
-Time to test `RunCommand`. Open a new `test.py` python file the following terminal command:
-
-```command
-vim vim test.py
-```
-
-Enter the following content into the file.
-
-```python
-print("Well done, friend. Now leave, please.")
-```
-
-Save the file with `w` and use `call RunCommand('python3')`.
-
-You should see the following output.
-
+````
 ```
 [secondary_label Output]
-Well done, friend. Now leave, please.
+_
+```
+````
+
+`inoremap lab<cr> <esc>:call LoadTemplate('lab.txt')<cr>`
+
+##### lab.txt
+
+````
+```
+[label _]
+XXX
+```
+````
+
+`inoremap cpr<cr> <esc>:call LoadTemplate('crp.txt')<cr>`
+
+##### crp.txt
+
+````
+```custom_prefix(_)
+XXX
+```
+````
+
+#### Environment Variations
+
+`inoremap ecod<cr> <esc>:call LoadTemplate('ecod.txt')<cr>`
+
+##### ecod.txt
+
+````
+```_
+[environment XXX]
+XXX
+```
+````
+
+`inoremap elab<cr> <esc>:call LoadTemplate('elab.txt')<cr>`
+
+##### elab.txt
+
+````
+```
+[environment _]
+[label XXX]
+XXX
+```
+````
+
+`inoremap eout<cr> <esc>:call LoadTemplate('eout.txt')<cr>`
+
+##### eout.txt
+
+````
+```
+[environment _]
+[secondary_label Output] XXX
+```
+````
+
+`inoremap ecpr<cr> <esc>:call LoadTemplate('ecpr.txt')<cr>`
+
+##### ecpr.txt
+
+````
+```custom_prefix(XXX)
+[environment XXX]
+XXX
+```
+````
+
+#### Callouts
+
+ `inoremap nowa<cr> <esc>:call LoadTemplate('nowa.txt')<cr>`
+
+##### nowa.txt
+
+```text
+<$>[_]
+**XXX:** XXX
+<$>
 ```
 
-Try opening multiple panes using `sp` and then run `RunCommand`.  The result will be the same.
+`inoremap note<cr> <esc>:call LoadTemplate('note.txt')<cr>`
 
-## Step Five - Creating Maps
+##### note.txt
 
-YYYYYYYYYYYYY  is mapleader global?
+```text
+<$>[note]
+**Note:** _
+<$>
+```
 
-You don't want to enter command-line mode and use `call RunCommand('python3')` every time.  Instead, you will create a map for `ClearAllBuffers` and `RunCommand`.  Add the following code to the bottom of the file. You can use any key combination. I happen to use these.  Don't forget to test them.
+`inoremap warn<cr> <esc>:call LoadTemplate('warn.txt')<cr>`
+
+##### warn.txt
+
+```text
+<$>[warning]
+**Warning:** _
+<$>
+```
+
+`inoremap info<cr> <esc>:call LoadTemplate('info.txt')<cr>`
+
+##### info.txt
+
+
+```text
+<$>[info]
+**Info:** _
+<$>
+```
+
+`inoremap drft<cr> <esc>:call LoadTemplate('drft.txt')<cr>`
+
+##### drft.txt
+
+```text
+<$>[draft]
+**Draft:** _
+<$>
+```
+
+**Formatting**
+
+`inoremap col<cr> <esc>:call LoadTemplate('col.txt')<cr>`
+
+##### col.txt
+
+```text
+[column
+_
+]
+[column
+XXX
+]
+```
+
+`inoremap dets<cr> <esc>:call LoadTemplate('dets.txt')<cr>`
+
+##### dets.txt
+
+```text
+[details _
+XXX
+]
+```
+
+### Updated do_markup.vim
 
 ```vim
-nnoremap <leader>b :call ClearAllBuffers()<CR>
-nnoremap <leader>r :call RunCommand('python3')<CR>
+" UTILITIES
+inoremap ;; <esc>:call ToEndOrNext('XXX')<cr>
+nnoremap <F4> <esc>:w<cr>:so %<cr>
+
+function LoadTemplate(template_filename)
+
+  silent execute 'read ' . a:template_filename
+  normal kdd
+  
+  call ToEndOrNext('XXX')
+
+endfunction
+
+function ToEndOrNext(template_param)
+
+  if search(a:template_param, 'n')
+    execute "normal! /" . a:template_param . "\r"
+    normal diw
+    startinsert!
+  else
+    startinsert
+  endif
+
+endfunction
+
+" BRACKETS
+inoremap ** ****<space><esc>2hi
+inoremap ` ``<space><left><left>
+inoremap _ __<space><left><left>
+inoremap ^ < ^><^><space><esc>3hi
+
+" BLOCKS
+inoremap code<cr> <esc>:call LoadTemplate('code.txt')<cr>
+inoremap out<cr> <esc>:call LoadTemplate('out.txt')<cr>
+inoremap lab<cr> <esc>:call LoadTemplate('lab.txt')<cr>
+inoremap cpr<cr> <esc>:call LoadTemplate('crp.txt')<cr>
+inoremap ecod<cr> <esc>:call LoadTemplate('ecod.txt')<cr>
+inoremap elab<cr> <esc>:call LoadTemplate('elab.txt')<cr>
+inoremap eout<cr> <esc>:call LoadTemplate('eout.txt')<cr>
+inoremap ecpr<cr> <esc>:call LoadTemplate('ecpr.txt')<cr>
+inoremap nowa<cr> <esc>:call LoadTemplate('nowa.txt')<cr>
+inoremap note<cr> <esc>:call LoadTemplate('note.txt')<cr>
+inoremap warn<cr> <esc>:call LoadTemplate('warn.txt')<cr>
+inoremap info<cr> <esc>:call LoadTemplate('info.txt')<cr>
+inoremap drft<cr> <esc>:call LoadTemplate('drft.txt')<cr>
+inoremap col<cr> <esc>:call LoadTemplate('col.txt')<cr>
+inoremap dets<cr> <esc>:call LoadTemplate('dets.txt')<cr>
 ```
 
-I like to define a `<leader>` key.  I use the `';'` character.  Enter the following code above your maps.
+## How I Use This Plugin
+
+I use this plugin from VS Code. Using an extension called _Markdown Preview_, I preview a markdown file. Files dock to the top by default. Next, I open the markdown file in vim from a terminal, which docks to the bottom by default. Now, any time I change and save the markdown file in vim, the preview updates to reflect the change.
+
+I typically use the following normal- and insert-mode mappings to quickly save the file.
 
 ```vim
-let mapleader = ";"
+nnoremap ;s :w<cr>
+inoremap ;s <esc>:w:<cr>
 ```
-
-Congratulations!  You are done making your vim plugin!
 
 ## Conclusion
 
-You learned a lot in this tutorial, but this is just the beginning.  Hopefully this tutorial has created enough momentum for you to create your own plugins. I hope this tutorial helped you.  Have a very pleasurable evening.  Now leave, please.
-
-## Complete Code
-
-Here is the complete code for the the `run_python.vim` plugin:
-
-```vim
-"
-" Function removes all buffers except the active one.
-"
-function ClearAllBuffers()
-  " Save current filename, as it will be lost after clearing all buffers.
-  let temp_filename = @%
-
-  " Save current python file.
-  silent w
-
-  " Clear all buffers.  You will lose the current file.
-  %bd!
-
-  " Open the current python file
-  execute "read " . temp_filename
-
-  " After you open the file using :read, it will prepend a blank line at
-  " the top.  We delete it here.
-  normal kdd
-
-  " Save the python file.
-  silent execute "w! " . temp_filename
-
-  " Give message saying we're good to go.
-  echo "Ready to edit " . temp_filename . ", fiend."
-
-endfunction
-
-"
-" Clears all buffers, runs python3 on current file, and sends output to
-" bottom pane.
-"
-function RunCommand(command)
-
-  call ClearAllBuffers(0)
-
-  " Save current python file.
-  let temp_filename = @%
-
-  " Create bottom pane for python output. This leaves cursor in top pane.
-  " We want the cursor to be in the bottom pane at this juncture.
-  sp
-
-  " Moves cursor back to top pane.
-  wincmd j
-
-  " Erases current buffer.  Current python file is opened in both top and
-  " bottom pane.  We only want the python file open in the top pane.
-  enew
-
-  " Run python file, sending output to bottom pane.
-  silent execute "!" . a:command . " . temp_filename
-
-  " After you open the file using :read, it will prepend a blank line at the
-  " top.  We delete it here.
-  normal kdd
-
-  " Move cursor back up to top pane.
-  wincmd p
-
-endfunction
-
-let mapleader = ";"
-
-nnoremap <leader>b :call ClearAllBuffers()<CR>
-nnoremap <leader>r :call RunCommand('python3')<CR>
-```
+You’ve learned a little bit about mappings and VimL. I hope you use this knowledge to experiment with your own vim plugins. Have fun, friend.
