@@ -11,7 +11,7 @@ To complete this tutorial, you will need:
 - Knowledge about regular expressions; how to interpret and create them.  Read [An Introduction to Regular Expressions](https://www.digitalocean.com/community/tutorials/an-introduction-to-regular-expressions) to learn more.
 - Experience using common command line tools like `cut`, `head`, and so on.  Check out [Sed Stream Editor to Manipulate Text in Linux](https://www.digitalocean.com/community/tutorials/the-basics-of-using-the-sed-stream-editor-to-manipulate-text-in-linux) and [How To Use the AWK language to Manipulate Text in Linux](https://www.digitalocean.com/community/tutorials/how-to-use-the-awk-language-to-manipulate-text-in-linux).
 
-# Your First Pipe and Filter using `sed` and `awk`
+## Your First Pipe and Filter using `sed` and `awk`
 Let us walk through a basic example of filtering specific data from a file with `awk` and then formatting it for display with `sed`.  You will use a pipeline to extract and then print the product names and prices for products with a price greater than ten dollars.
 
 First, create a `products.text` file in vim using the following command:
