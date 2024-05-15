@@ -14,13 +14,25 @@ Let's begin by opening vim. By default you will have one pane and one buffer.  Y
 While in command mode, use `:ls`.
 
 ```vim
-[output]
+:ls
+  1 %a   "[No Name]"                    line 1
 ```
-As you can see from this output, you have one unnamed buffer. Create a new, unnamed buffer using`:enew`, and then view buffers using `:ls`.
+
+In order to create another buffer, you need to name the current one. Add some text to the buffer save it to a file using `:w a.txt`, and view buffers using `:ls`.
 
 ```vim
-[output]
+:ls
+  1 %a   "a.txt"                        line 1
 ```
+
+Create a new, unnamed buffer using`:enew`, and then view buffers using `:ls`.
+
+```vim
+:ls
+  1 #    "a.txt"                        line 1
+  3 %a   "[No Name]"                    line 1
+```
+
 Now you have two unnamed buffers.
 
 ### Navigating Between Buffers
@@ -33,12 +45,15 @@ When you have multiple buffers in memory, you can use the following commands to 
 
 > Each time you navigate to a buffer, that buffer becomes the **active** buffer, and the previously opened buffer becomes a hidden buffer.
 
-Let's try these commands out.  Use `:buffer 2` to navigate to buffer 2, and then `:buffer 1` to navigate back to buffer 1.
+Let's try these commands out.  Remember from the buffers listing above that the second buffer had a number of 3. Therefore, to navigate to it use `:buffer 2` and then `:buffer 1` to navigate back to buffer 1.
 
-Now use`:ls` and notice how each buffer has an ID, name, and [research].
+The `:ls` command produces a listing with the following format:
 
 ```vim
-[id][name][...]
+
+Number  Indicator  Name     Line #
+
+     1  #          "a.txt"  line 1
 ```
 
 Notice how both buffers are unnamed.
