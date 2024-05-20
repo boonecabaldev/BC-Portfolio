@@ -10,7 +10,7 @@ A buffer doesn't display the text, a window, or "pane",  does.
 
 A pane is is a section within the window. A pane can only display one buffer at a time. For simplicity, we'll assume we're working in a single pane.  We'll cover panes in more detail later.
 
-### Viewing and Creating Buffers
+### Viewing Buffers
 
 Let's begin by opening vim. By default you will have one pane and one buffer.  You can view all your buffers using `:ls` or `:buffers`.
 
@@ -52,7 +52,7 @@ u    an unlisted buffer (only displayed when [!] is used)
 
 The Indicator in the above `:ls` output is `%a`, which specifies that the buffer is active (`a`) and in the current window or pane (`%`).
 
-### Creating Buffers
+### Saving Buffers to Files
 
 Before we can create a new buffer, we need to save the active buffer to a file, effectively giving it a name. You can do this using `:w a.txt`. Add the text `File a.txt` to the buffer followed by the commands `:w a.txt | ls`, producing the following output:
 
@@ -67,7 +67,9 @@ Before we can create a new buffer, we need to save the active buffer to a file, 
 
 Notice that the buffer is now named `a.txt` and it has a number of `1`. Now you can create a new buffer.
 
-### Saving Buffers to Files
+In addition to `:w`, you can save all open buffers using `:wa`, which stands for "write all."
+
+### Creating Buffers
 
 You can create a new, unnamed buffer using `:enew`. Use the commands `:enew | ls`, which produces the following output:
 
@@ -84,16 +86,16 @@ Now we two buffers
 
 ### Deleting Buffers
 
-You can delete a buffer using `:bdelete`. Try to delete the active buffer, buffer 2 using the commands `:bdelete | ls`:
+You can delete a buffer using `:bdelete` or `:bd`. Try to delete the active buffer (buffer 4) using the commands `:bd | ls`:
 
 ```vim
 "a.txt" 1L, 11B
   1 %a   "a.txt"                        line 1
 ```
 
-We deleted buffer 4, and now we're back to just buffer 1. If you had made any changes to buffer 4 before deleting it, vim would have displayed a message saying you have unsaved changes to the active buffer. You can `:bdelete` to skip this message and dicard changes.
+We deleted buffer 4, and now we're back to just buffer 1. If you had made any changes to buffer 4 before deleting it, vim would have displayed a message saying you have unsaved changes to the active buffer. You can `:bd!` to skip this message and discard changes.
 
-### Exiting Vim and Deleting Buffers
+### Exiting Vim
 
 You can exit vim using the following commands:
 
@@ -101,21 +103,21 @@ You can exit vim using the following commands:
 - `:wq`: Write current file and close window. Quit if last edit. Writing fails when buffer is unnamed.
 - `:x`: Like `:wq`, except write ony when changes have been made.
 
-If you want to delete all open buffers without quitng Vim, you can use `:bd` or `:bd!`. You should be at a bash prompt. Create a new file `b.txt` using the following command:
+Save the active buffer and quit Vim using `:wq`. Next, create a new file `b.txt` using the following command:
 
-```bash
+```sh
 cat << EOF > b.txt
 File b.txt
 EOF
 ```
 
-Open `a.txt` and `b.txt` in Vim using the following command:
+Finally, open `a.txt` and `b.txt` in Vim using the following command:
 
 ```bash
 vim a.txt b.txt
 ```
 
-You should have both files open.
+Using `:ls` shows both files are open.
 
 ```vim
 :ls
@@ -123,12 +125,9 @@ You should have both files open.
   2      "b.txt"                        line 0
 ```
 
-Vim has a great command `:bufdo [command]` that allows you to perform a command over each buffer. Using `:bufdo bd` followed by `:ls` produces the output:
+Try to quit Vim using `:q`. It will say `E173: 1 more file to edit`. It seems that you have to activate every buffer before you can quit it.  Use `:bn | q` to navigate to the next buffer (2) and then quit. This should work.
 
-```vim
-:ls
-  3 %a   "[No Name]"                    line 1
-```
+> I noticed this problem when I tried to save all buffers and quit Vim using `:wa | q`, which failed.
 
 ### Opening Files
 
@@ -157,7 +156,50 @@ The following commands allow you to navigate between buffers:
 - `:[N]bprev [N]` or `:[N]bp [N]`: move to previous buffer, where N is the buffer number.
 - `:[N]buffer [N]` or `:[N]b [N]`: move to specified buffer N, where N is the buffer number.
 
-From the previous `:ls` command, we have buffers 1 and 2 open, with 2 being the active buffer.
+From the previous `:ls` command, we have buffers 1 and 2 open, with 2 being the active buffer. Using `:bp | ls` navigates to buffer 1.
+
+```vim
+"a.txt" 1L, 10B
+  1 %a   "a.txt"                        line 1
+  2 #    "b.txt"                        line 1
+```
+
+Buffer 1 is now the active buffer; the `%a` indicator tells you this. Now use `:bp | ls`.
+
+```vim
+"b.txt" 1L, 11B
+  1 #    "a.txt"                        line 1
+  2 %a   "b.txt"                        line 1
+```
+
+Buffer 2 is now the active buffer, again, from the `%a` indicator. Similarly you can navigate to a specific buffer using `:buffer`. Using `:b 1 | ls` navigates to buffer 1.
+
+```vim
+"a.txt" 1L, 10B
+  1 %a   "a.txt"                        line 1
+  2 #    "b.txt"                        line 1
+```
+
+### Iterating Over Buffers
+
+Vim has a great command `:bufdo [command]` that allows you to perform a command over each buffer. Using `:bufdo bd` followed by `:ls` produces the output:
+
+```vim
+:ls
+  3 %a   "[No Name]"                    line 1
+```
+
+You can use `:bufdo` to perform search-and-replace across multiple buffers. Open `a.txt` and `b.txt` using `:e a.txt | e b.txt | ls`.
+
+```vim
+"b.txt" 1L, 11B
+  1 #    "a.txt"                        line 1
+  2 %a   "b.txt"                        line 1
+```
+
+The contents of `a.txt` and `b.txt` are "File a.txt" and "File b.txt", respectively. Let's search-and-replace "File" with "File:". Use `:bufdo! s/File/&:/ | update`. If you navigate between buffers using `:bn` and `:bp`, you will see both files have been changed.
+
+Using `:bufdo!` prevents the `No write since last change` error. `:update` is a smarter version of `:w` in that it only saves the file if changes have been made.
 
 ### Buffer States
 
