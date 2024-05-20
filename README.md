@@ -1,6 +1,6 @@
 # Software Development Articles & Tutorials by Boone Cabal
 
-Here is my first batch of articles I am writing for [DigitOcean](https://digitalocean.com):
+Here are my articles, which are very stimulating.
 
 ### Recent
 
