@@ -14,4 +14,4 @@ Here are my articles, which are very stimulating.
 
 ### Python
 
-Here is a (video)[https://youtu.be/Fdp2eefdvEs?si=s4MlpyCY_9wbNzoU] I did for (CodeMentor.io)[https://codementor.io]
+Here is a [video](https://youtu.be/Fdp2eefdvEs?si=s4MlpyCY_9wbNzoU) I did for [CodeMentor.io](https://codementor.io)
