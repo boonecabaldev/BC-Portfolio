@@ -11,3 +11,7 @@ Here are my articles, which are very stimulating.
 ### In Progress
 
 - [Demystifying Vim Buffers and Windows](https://github.com/boonecabaldev/Articles/blob/main/VimBuffersWindows.md)
+
+### Python
+
+Here is a (video)[https://youtu.be/Fdp2eefdvEs?si=s4MlpyCY_9wbNzoU] I did for (CodeMentor.io)[https://codementor.io]
