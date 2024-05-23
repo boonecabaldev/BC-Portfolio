@@ -50,103 +50,87 @@ u    an unlisted buffer (only displayed when [!] is used)
   x  a buffer with read errors
 ```
 
-The Indicator in the above `:ls` output is `%a`, which specifies that the buffer is active (`a`) and in the current window or pane (`%`).
+The Indicator in the above `:ls` output is `%a`, which specifies that the buffer is active (`a`) and in the current window or pane (`%`). `+` is useful; it tells you if a buffer is modified. We'll cover another useful one, `#`, later.
+
+### Helper `:ls` Function
+
+Throughout this article we will be issuing command-line commands followed by the `:ls` command. This would require us to use something like `:bd | ls`. This repetition can be tedious.  As a convenience I recommend adding the following function to your `.vimrc`:
+
+```vim
+" You must specify 'normal' for all normal-mode commands to work.
+function! ExeCmdLs(cmd)
+  if a:cmd =~ '^normal'
+    exe a:cmd
+    ls
+  elseif empty(a:cmd)
+    ls
+  else
+    exe a:cmd .. ' | ls'
+  endif
+endfunction
+
+nnoremap <space>c :call ExeCmdLs('')<left><left>
+```
+
+In normal mode when you type `<space>c`, it places you in command-line mode and types `:call ExeCmdLs('_')`, placing your cursor at the `_`.
+
+For the rest of the article where ever your see `:[command] | ls`, this translates to using the `<space>c[command]` macro.
 
 ### Saving Buffers to Files
 
-Before we can create a new buffer, we need to save the active buffer to a file, effectively giving it a name. You can do this using `:w a.txt`. Add the text `File a.txt` to the buffer followed by the commands `:w a.txt | ls`, producing the following output:
-
-> `:w` is the equivalent of the typical Save command in Windows.
+Before we can create a new buffer, we need to save the active buffer to a file, effectively giving it a name. Add the text `File a.txt` to the buffer, and then use `:w a.txt | ls`.
 
 ```vim
 "a.txt" [New] 1L, 11B written
   1 %a   "a.txt"                        line 1
 ```
 
-> You can use the `|` operator to invoke multiple command-mode commands.
+Notice that the buffer is now named `a.txt`, it has a number of 1, and `%a` tells you it is the active buffer in the current window.
 
-Notice that the buffer is now named `a.txt` and it has a number of `1`. Now you can create a new buffer.
-
-In addition to `:w`, you can save all open buffers using `:wa`, which stands for "write all."
+In addition to `:w`, you can save all open buffers using `:wa`, which stands for "write all." This saves all buffers.
 
 ### Creating Buffers
 
-You can create a new, unnamed buffer using `:enew`. Use the commands `:enew | ls`, which produces the following output:
+Use `:enew | ls` to create a new, unnamed buffer:
 
 ```vim
-:enew | ls
+:call ExeCmdLs('enew')
   1 #    "a.txt"                        line 1
-  4 %a   "[No Name]"                    line 1
+  3 %a   "[No Name]"                    line 1
 ```
 
-Now we two buffers
+Now we have named buffer 1, `a.txt`, and unnamed buffer 3, and buffer 3 is the active buffer. Enter the text "File b.txt", then use `:w b.txt | ls`.
 
-- buffer `1`: `a.txt`
-- buffer `4`: `[No Name]`, the active buffer
+```vim
+"b.txt" [New] 1L, 11B written
+  1      "a.txt"                        line 1
+  3 %a   "b.txt"                        line 1
+```
+
+Now we have two files to work with.
 
 ### Deleting Buffers
 
-You can delete a buffer using `:bdelete` or `:bd`. Try to delete the active buffer (buffer 4) using the commands `:bd | ls`:
+Delete buffer 3, `b.txt` using `:bd | ls`.
 
 ```vim
 "a.txt" 1L, 11B
   1 %a   "a.txt"                        line 1
 ```
 
-We deleted buffer 4, and now we're back to just buffer 1. If you had made any changes to buffer 4 before deleting it, vim would have displayed a message saying you have unsaved changes to the active buffer. You can `:bd!` to skip this message and discard changes.
+Back to one buffer: `a.txt`.
 
-### Exiting Vim
-
-You can exit vim using the following commands:
-
-- `:q`: Quit the current window, which can be either the pane or the Vim window. Fails when changes have been made.
-- `:wq`: Write current file and close window. Quit if last edit. Writing fails when buffer is unnamed.
-- `:x`: Like `:wq`, except write ony when changes have been made.
-
-Save the active buffer and quit Vim using `:wq`. Next, create a new file `b.txt` using the following command:
-
-```sh
-cat << EOF > b.txt
-File b.txt
-EOF
-```
-
-Finally, open `a.txt` and `b.txt` in Vim using the following command:
-
-```bash
-vim a.txt b.txt
-```
-
-Using `:ls` shows both files are open.
-
-```vim
-:ls
-  1 %a   "a.txt"                        line 1
-  2      "b.txt"                        line 0
-```
-
-Try to quit Vim using `:q`. It will say `E173: 1 more file to edit`. It seems that you have to activate every buffer before you can quit it.  Use `:bn | q` to navigate to the next buffer (2) and then quit. This should work.
-
-> I noticed this problem when I tried to save all buffers and quit Vim using `:wa | q`, which failed.
-
-### Opening Files
-
-You can use the `:e` or `:edit` command to open a file. Use `:e a.txt` to open file `a.txt`, followed by `:ls`:
-
-```vim
-"a.txt" 1L, 11B
-  1 %a   "a.txt"                        line 1
-```
+### Opening Files Into Buffers
 
 Open `b.txt` using `:e b.txt | ls`.
 
 ```vim
 "b.txt" 1L, 11B
   1 #    "a.txt"                        line 1
-  2 %a   "b.txt"                        line 1
+  3 %a   "b.txt"                        line 1
 ```
 
-Now that we have two named buffers open, let's learn how to navigate between buffers.
+Notice that buffer 1 has an indicator of `#`. This is the last edited buffer. You can use `:e #` to toggle between the current and last edited buffers. Use `:e # | ls` a few times and notice how the indicators change.
 
 ### Navigating Beteen Buffers
 
@@ -155,6 +139,8 @@ The following commands allow you to navigate between buffers:
 - `:[N]bnext [N]` or `:[N]bn [N]`: move to next buffer, where N is the buffer number.
 - `:[N]bprev [N]` or `:[N]bp [N]`: move to previous buffer, where N is the buffer number.
 - `:[N]buffer [N]` or `:[N]b [N]`: move to specified buffer N, where N is the buffer number.
+- `:bf[irst]`: move first buffer in buffer list.
+- `:bl[ast]`: move to last buffer in buffer list.
 
 From the previous `:ls` command, we have buffers 1 and 2 open, with 2 being the active buffer. Using `:bp | ls` navigates to buffer 1.
 
@@ -172,7 +158,7 @@ Buffer 1 is now the active buffer; the `%a` indicator tells you this. Now use `:
   2 %a   "b.txt"                        line 1
 ```
 
-Buffer 2 is now the active buffer, again, from the `%a` indicator. Similarly you can navigate to a specific buffer using `:buffer`. Using `:b 1 | ls` navigates to buffer 1.
+Buffer 2 is now the active buffer, again, from the `%a` indicator. Similarly you can navigate to a specific buffer using `:buffer` or `:b`. Using `:b 1 | ls` navigates to buffer 1.
 
 ```vim
 "a.txt" 1L, 10B
@@ -182,14 +168,14 @@ Buffer 2 is now the active buffer, again, from the `%a` indicator. Similarly you
 
 ### Iterating Over Buffers
 
-Vim has a great command `:bufdo [command]` that allows you to perform a command over each buffer. Using `:bufdo bd` followed by `:ls` produces the output:
+Vim has a great command `:bufdo [command]` that allows you to perform a command over each buffer. Using `:bufdo bd` deletes all buffers.
 
 ```vim
 :ls
   3 %a   "[No Name]"                    line 1
 ```
 
-You can use `:bufdo` to perform search-and-replace across multiple buffers. Open `a.txt` and `b.txt` using `:e a.txt | e b.txt | ls`.
+Let's use `:bufdo` to perform search-and-replace across multiple buffers. Open `a.txt` and `b.txt` back up using `:e a.txt | e b.txt | ls`.
 
 ```vim
 "b.txt" 1L, 11B
@@ -197,9 +183,35 @@ You can use `:bufdo` to perform search-and-replace across multiple buffers. Open
   2 %a   "b.txt"                        line 1
 ```
 
-The contents of `a.txt` and `b.txt` are "File a.txt" and "File b.txt", respectively. Let's search-and-replace "File" with "File:". Use `:bufdo! s/File/&:/ | update`. If you navigate between buffers using `:bn` and `:bp`, you will see both files have been changed.
+The contents of `a.txt` and `b.txt` are "File a.txt" and "File b.txt", respectively. Let's search-and-replace "File" with "File:". Use `:bufdo! s/File/&:/ | update`. Now, if you navigate between buffers using `:bn` and `:bp`, you will see both files have been changed.
 
 Using `:bufdo!` prevents the `No write since last change` error. `:update` is a smarter version of `:w` in that it only saves the file if changes have been made.
+
+### Exiting Vim
+
+You can exit vim using the following commands:
+
+- `:q`: Quit the current window, which can be either the pane or the Vim window. Fails when changes have been made.
+- `:wq`: Write current file and close window. Quit if last edit. Writing fails when buffer is unnamed.
+- `:x`: Like `:wq`, except write ony when changes have been made.
+
+Let's look at a caveat of using quit commands. Save the active buffer and quit Vim using `:wq`. Now reopen `a.txt` and `b.txt` in Vim using the following command:
+
+```bash
+vim a.txt b.txt
+```
+
+Using `:ls` shows both files are open.
+
+```vim
+:ls
+  1 %a   "a.txt"                        line 1
+  2      "b.txt"                        line 0
+```
+
+Try to quit Vim using `:q`. It will say `E173: 1 more file to edit`. It seems that you have to activate every buffer before you can quit it.  Use `:bn | q` to navigate to the next buffer (2) and then quit. This should work.
+
+> I noticed this problem when I tried to save all buffers and quit Vim using `:wa | q`, which failed.
 
 ### Buffer States
 
@@ -218,50 +230,41 @@ When would could you use an unlisted buffer? Whenever you want to temporarily cr
 :setlocal nobuflisted
 ```
 
-Understand: `:ls!`, `:ls u`, and `:buffers!` display all buffers, both listed and unlisted. Conversely, `:ls` and `:buffers` _do not_ display unlisted buffers. The following code illustrates this:
+The `:ls!` and `:ls u` commands display all buffers, both listed and unlisted. Using `:ls!` produces the following output:
 
 ```vim
-" Create unlisted buffer
-:enew
-" List all listed and unlisted buffers
 :ls!
+  1 #    "a.txt"                        line 1
+  2      "b.txt"                        line 1
+  3u%a   "[No Name]"                    line 1
 ```
 
 #### Inactive
 
-An inactive buffer is one that is not displayed in any pane. Using the `:new` command creates a new pane and buffer, thereby making the previously active buffer inactive.
+An inactive buffer is one that is not displayed in any pane. For example, using `:new` creates a new pane and buffer, thereby making the previously active buffer inactive.
 
 #### Active
 
-The active buffer is the one that is currently displayed in _any_ active pane.
+The active buffer is the one that is currently displayed in _any_ active pane. As mentioned before, the `a` indicator is a buffer list identifies an active buffer.
 
 #### Hidden
 
 You can have multiple buffers loaded in memory, but a pane can only display one buffer.
-
-> All your buffers are in memory, and one buffer is displayed in the active pane.
-
- Any buffer not displayed in _any_ pane is hidden. You can make a buffer hidden using `:hide`.
+ In other words, any buffer not displayed in _any_ pane is hidden. You can make a buffer hidden using `:hide`.
 
 #### Loaded
 
-Editing a file places its buffer in a loaded state. For example, if you open a file using `:edit a.txt`, that buffer is loaded.
+In Vim, a loaded buffer is one that has the contents of a file read into it. For example, if you open a file using `:edit a.txt`, that buffer is loaded.
 
 #### Unloaded
 
-An unloaded buffer is one that has been removed from memory; `:bunload N` does this.
-
-#### Buffer State Examples
-
-```vim
-[examples]
-```
+`:bunload N` unloads a buffer from memory, and the contents of the file are removed from memory, but the buffer still appears in the buffer list.
 
 ## Panes
 
 You can create multiple panes, allowing you to edit different buffers. Alternatively, you can edit the same buffer in multiple panes, allowing you to view and edit multiple parts of the same buffer.
 
-Similar to how you can only have one active buffer, you can only have one active pane, and each pane has its own active buffer. Therefore, you can have multiple active buffers. Whichever pane contains the cursor is the active pane.
+Similar to how you can only have one active buffer, you can only have one active pane, and each pane has its own active buffer. Therefore, you can have multiple active buffers. Furthermore, the pane contains the cursor is the active pane.
 
 > You may need to reread this a few times to understand.
 
@@ -269,70 +272,185 @@ Similar to how you can only have one active buffer, you can only have one active
 
 There are useful settings that control how window creation and splitting work with the `:new`, `:split`, and `:vsplit` commands.
 
-- `:new`
-- `:split`
-- `:vsplit`
+> Taken from `:help`.
 
-Close and re-open vim. You have one pane and one unnamed buffer. Use `:new` to create a second pane and buffer, and then `:ls` to view buffers.
+- `:new`: create a new pane and start editing an unnamed buffer.
+- `:split {file}` `sp`: create a new pane and start editing file {file} in it. Works almost like `:split | edit {file}` when `{file}` is supplied.
+- `:vsplit` `vs`: works like `:split` but split vertically.
+
+**Demonstrating `:new`**
+
+Close and re-open vim. You have one pane and one unnamed buffer. Using `:new | ls` creates a pane below, but both panes are editing the same buffer.
 
 ```vim
-[buffers]
+:call ExeCmdLs('new')
+  1 #a   "[No Name]"                    line 1
+  2 %a   "[No Name]"                    line 1
 ```
 
-Notice how the new pane contains the cursor; this is the active pane, and its fresh, unnamed buffer is the active buffer.
+You will notice the cursor is in the bottom pane. This is the active or current pane.
 
-**DEMONSTRATE `:split`**
+**Demonstrating `:vsplit`**
 
-**DEMONSTRATE `:vsplit`**
+Now use `:vs` and notice how you now have one pane docked at the top and one pane docked on the bottom, with the bottom pane vertically divided into two sub-panes.
 
-### Pane Settings
+**Demonstrating `:split`**
+
+Now let's create a different layout. Reset the buffers using `:bd | ls`.
+
+```vim
+:ls
+  1 %a   "[No Name]"                    line 1
+```
+
+Use `:vs` and notice how you have one pane docked on the left and another docked on the right. Next, use `:sp` and notice how the right-docked pane is now divided horizontally into two panes.
+
+### Settings for `:new`, `:sp`, and `:vs`
 
 There are settings that control the behavior of `:split` and `:vsplit`.
 
-XXX
+- `splitbelow` or `sb`: When on, splitting a pane will put the new pane below the current one.
+- `splitright` or `spr`: When on, splitting a pane will put the new pane right the current one.
+
+> You can unset a Vim option by prepending the setting with "no". For example, unset splitbelow using `:set nosplitbelow`.
 
 ### Navigating Between Panes
 
-You can navigate between panes using `:bnext`, `:bprev`, and `:buffer N`. Understand that navigating between panes simply means moving the cursor from one pane to another, thus activating a new one.
+You can navigate between panes using `:bnext` or `:bn`, `:bprev` or `:bp`, and `:buffer N` or `:b N`. Navigating between panes simply means moving the cursor from one pane to another, thus activating a new one.
 
-- `:wincmd j`
-- `:wincmd XXX`
-- `:wincmd XXX`
-- `:wincmd XXX`
-- `:Ctrl-w h/j/k/l`
+- `:wincmd {arg}` or `:winc`: Changes active pane in direction specified by `{arg}`. For instance, to move cursor up, use `:winc k`.
 
-It's important to understand that both buffers and windows have numbers which identify them, and you use these numbers for navigation, as well as other functions. Understanding the difference between navigating between panes versus buffers will help you avoid getting lost when you have lots of open panes and buffers.
+Alternatively, you can use the hotkeys `:Ctrl-w h/j/k/l`.
+
+> It's important to understand that both buffers and windows have numbers which identify them, and you use these numbers for navigation, as well as other functions. Understanding the difference between navigating between panes versus buffers will help you avoid getting lost when you have lots of open panes and buffers.
+
+### Iterate Over Panes
+
+Similar to `:bufdo` there is a `:windo` command that lets you iterate over panes. Use `:windo echo winnr()` to display the pane number of each pane.
 
 ### Deleting Panes
 
 Similar to buffers, you can use `:x`, `:bd`, `:q`, and `:wq` to close a window.
 
-Understand that some commands delete buffers, and some delete both panes and buffers. You can delete a buffer, or a buffer and a pane, but you can't delete a pane without deleting a buffer.
+Some commands delete buffers, and some delete both panes and buffers. You can delete a buffer, or a buffer and a pane, but you can't delete a pane without deleting a buffer.
 
-Delete the active pane using `:close`. Now you have one pane and one unnamed buffer. Confirm with `:ls`.
+Let's do a test. Quite and open `a.txt` in Vim. Next, use `:vs b.txt | ls` to open `b.txt` in a right-docked pane.
 
 ```vim
-[ls]
+"b.txt" 1L, 11B
+  1 #a   "a.txt"                        line 0
+  2 %a   "b.txt"                        line 1
 ```
 
-## Challenging Example - Working With Multiple Buffers and Panes
+> Notice how both `a.txt` and `b.txt` are active buffers, but `b.txt` is the current window (`%a`). Recall that the `%` indicator defines the active window.
 
-```text
-- buffers a.txt, b.txt, c.txt, d.txt
-- 3 windows
-- pane 1: a.txt, a.txt
-- pane 2: b.txt
-- pane 3: c.txt
-- c.txt is hidden
-- delete pane 1, a.txt, b.txt
-- :ls to confirm a.txt, b.txt are deleted
-- state:
--   pane 2: b.txt
--   pane 3: c.txt
-- open c.txt in pane 3
-- delete pane 3
-- state
--   pane 2 has b.txt
-- bd
-- init vim state
+Delete the active pane using `:close | ls`.
+
+```vim
+:call ExeCmdLs('close')
+  1 %a   "a.txt"                        line 1
+  2 #    "b.txt"                        line 0
 ```
+
+Both buffers still appear in the buffer list. Therefore, closing a pane doesn't delete its buffer. Reopen `b.txt` using `:vs b.txt`, and then use `:bd | ls`. You will notice that both the `b.txt` pane and buffer are removed.
+
+```vim
+:call ExeCmdLs('bd')
+  1 %a   "a.txt"                        line 1
+```
+
+## Example Using Buffers and Panes
+
+Here is an example of Vim commands that do the following. Begin by opening `a.txt`, `b.txt`, and `c.txt` in Vim.
+
+```vim
+:ls
+  1 %a   "a.txt"                        line 1
+  2      "b.txt"                        line 0
+  3      "c.txt"                        line 0
+```
+
+Create unnamed buffer in right-docked pane, and then create unnamed buffer in bottom-docked sub-pane. You are now in the bottom right pane using `:vnew | new | ls`.
+
+```vim
+:vnew
+:new
+:ls
+  1  a   "a.txt"                        line 0
+  2      "b.txt"                        line 0
+  3      "c.txt"                        line 0
+  4 #a   "[No Name]"                    line 0
+  5 %a   "[No Name]"                    line 1
+```
+
+Navigate to `c.txt` buffer using `:b c.txt | ls`.
+
+```vim
+:b c.txt
+:ls
+  1  a   "a.txt"                        line 0
+  2      "b.txt"                        line 0
+  3 %a   "c.txt"                        line 1
+  4  a   "[No Name]"                    line 0
+```
+
+Notice how when you navigate to buffer `c.txt`, the unnamed buffer 5 is deleted.
+
+Move cursor to top-right pane using `:winc k | ls`.
+
+```vim
+:winc k
+:ls
+  1 #a   "a.txt"                        line 0
+  2      "b.txt"                        line 0
+  3  a   "c.txt"                        line 1
+  4 %a   "[No Name]"                    line 1
+```
+
+Navigate to `b.txt` buffer using `b b.txt | ls`.
+
+```vim
+:b b.txt
+:ls
+"b.txt" 1L, 11B
+  1  a   "a.txt"                        line 0
+  2 %a   "b.txt"                        line 1
+  3  a   "c.txt"                        line 1
+```
+
+Always notice the indicators when you are creating multiple panes and buffers like this
+
+You could have achieved the same thing using `:vs b.txt | sp c.txt | ls`.
+
+```vim
+:ls
+  1  a   "a.txt"                        line 0
+  2 #a   "b.txt"                        line 1
+  3 %a   "c.txt"                        line 1
+```
+
+Notice that buffer 2 has the `#` indicator, which represents the alternate toggle buffer. Use `:e # | ls` to toggle to it.
+
+```vim
+"b.txt" 1 line --100%-- ((1) of 3)
+  1  a   "a.txt"                        line 0
+  2 %a   "b.txt"                        line 1
+  3 #    "c.txt"                        line 1
+```
+
+Now buffer 2 is the active buffer. This is another useful indicator to look for.
+
+Now toggle back to buffer 3 using `:e # | ls`, and then use `:bd | bd | ls` to delete buffers 2 and 3, and notice how deleting each buffer also closes its associated pane.
+
+```vim
+:bd
+:bd
+:ls
+  1 %a   "a.txt"                        line 1
+```
+
+## Conclusion
+
+You made it! Hopefully this tutorial has demystified using buffers and panes in Vim. This barely scratches the surface of Vim's capabilities. I strongly recommend that you experiment go down rabbit holes using `:help`.
+
+Well done, fiend. Now leave, please.
