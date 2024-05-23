@@ -327,7 +327,7 @@ Similar to `:bufdo` there is a `:windo` command that lets you iterate over panes
 
 Similar to buffers, you can use `:x`, `:bd`, `:q`, and `:wq` to close a window.
 
-Some commands delete buffers, and some delete both panes and buffers. You can delete a buffer, or a buffer and a pane, but you can't delete a pane without deleting a buffer.
+> You can delete a buffer, or a buffer and a pane, but you can't delete a pane without deleting a buffer.
 
 Let's do a test. Quite and open `a.txt` in Vim. Next, use `:vs b.txt | ls` to open `b.txt` in a right-docked pane.
 
