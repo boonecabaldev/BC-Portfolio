@@ -1,5 +1,7 @@
 # Mastering Vim: Buffers, Windows, and Your Text Editing Arsenal
 
+In this tutorial we will cover the basics of working with buffers and windows (called panes) in Vim using an example-driven approach. To get the most out of it, I strongly recommend that you keep Vim open and follow each step. Do not skip any steps. Just be patient and do each step, one at a time. Actively doing it will reinforce the concepts, making it easier to learn.
+
 ## Buffers: Your Textual Workspaces
 
 A buffer is an area in memory that stores text. Every time you open a file, its contents are read into a buffer, allowing makes changes to that buffer without affecting the original file.
