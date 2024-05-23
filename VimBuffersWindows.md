@@ -1,5 +1,7 @@
 # Mastering Vim: Buffers, Windows, and Your Text Editing Arsenal
 
+### Introduction
+
 In this tutorial we will cover the basics of working with buffers and windows (called panes) in Vim using an example-driven approach. To get the most out of it, I strongly recommend that you keep Vim open and follow each step. Do not skip any steps. Just be patient and do each step, one at a time. Actively doing it will reinforce the concepts, making it easier to learn.
 
 ## Buffers: Your Textual Workspaces
