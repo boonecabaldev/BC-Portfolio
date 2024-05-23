@@ -313,7 +313,7 @@ There are settings that control the behavior of `:split` and `:vsplit`.
 
 #### Navigating Between Panes
 
-You can navigate between panes using `:bnext` or `:bn`, `:bprev` or `:bp`, and `:buffer N` or `:b N`. Navigating between panes simply means moving the cursor from one pane to another, thus activating a new one.
+You can navigate between panes using `:wincmd {arg}`.  Navigating between panes simply means moving the cursor from one pane to another, thus activating a new one.
 
 - `:wincmd {arg}` or `:winc`: Changes active pane in direction specified by `{arg}`. For instance, to move cursor up, use `:winc k`.
 
