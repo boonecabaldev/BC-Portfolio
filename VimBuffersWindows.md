@@ -339,7 +339,7 @@ Let's do a test. Quite and open `a.txt` in Vim. Next, use `:vs b.txt | ls` to op
 
 > Notice how both `a.txt` and `b.txt` are active buffers, but `b.txt` is the current window (`%a`). Recall that the `%` indicator defines the active window.
 
-Delete the active pane using `:close | ls`.
+Close the active pane using `:close | ls`.
 
 ```vim
 :call ExeCmdLs('close')
