@@ -181,7 +181,7 @@ You can navigate to a specific buffer using `:buffer` or `:b`. Use `:b 1 | ls` t
   3 %a   "[No Name]"                    line 1
 ```
 
-One use of `:bufdo XXX` is to perform search-and-replace across multiple buffers. Open `a.txt` and `b.txt` using `:e a.txt | e b.txt | ls`.
+One use of `:bufdo s/File/&:/ | update` is to perform search-and-replace across multiple buffers. Open `a.txt` and `b.txt` using `:e a.txt | e b.txt | ls`.
 
 ```vim
 "b.txt" 1L, 11B
