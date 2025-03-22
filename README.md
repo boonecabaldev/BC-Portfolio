@@ -27,7 +27,7 @@ These articles dive deep into practical solutions and advanced techniques, desig
 These projects highlight my ability to design creative, functional software solutions tailored to real-world needs.
 
 ### Software
-- **[Colemak Popup](https://github.com/boonecabaldev/colemak-extension)**  
+- **[Colemak Popup](https://github.com/boonecabaldev/Colemak-Popup)**  
   A Chrome extension that enables Colemak keyboard layout typing via a popup dialog, ideal for users on restricted systems.
 - **[CodeLocker](https://github.com/boonecabaldev/CodeLocker)**  
   A secure WinForms app featuring a tamper-proof UI that encrypts codes or passwords with a time-based lock, unlocking them after a set duration or at a specified future date.
