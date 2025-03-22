@@ -1,5 +1,7 @@
 # Software Development Articles & Tutorials by Boone Cabal
 
+## Articles
+
 Here are my articles, which are very stimulating.
 
 ### Web Development
@@ -12,6 +14,14 @@ Here are my articles, which are very stimulating.
 ### Vim
 - [How to Make DigitalOcean Markdown Vim Plugin](https://github.com/boonecabaldev/Articles/blob/main/DigitalOceanMarkdownVimPlugin.md)
 - [Demystifying Vim Buffers and Windows](https://github.com/boonecabaldev/Articles/blob/main/VimBuffersWindows.md)
+
+## Projects
+
+Here are some other projects, which were very pleasurable.
+
+### Software
+
+Here is a Chrome browser extension called [Colemak Popup](https://github.com/boonecabaldev/colemak-extension) 
 
 ### Video(s)
 
