@@ -1,4 +1,4 @@
-# Software Development Articles & Tutorials by Boone Cabal
+# Software Development Portfolio of Boone Cabal
 
 ## Articles
 
