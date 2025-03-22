@@ -21,8 +21,9 @@ Here are some other projects, which were very pleasurable.
 
 ### Software
 
-Here is a Chrome browser extension called [Colemak Popup](https://github.com/boonecabaldev/colemak-extension), which pops a dialog box that allows you to type using the colemak keyboard layout within Chrome. Using the colemak layout is only possible (in Windows) by accessing settings, which in some cases you may not be able to do; think of a computer in a public library.
+- [Colemak Popup](https://github.com/boonecabaldev/colemak-extension): Chrome browser extension that pops a dialog box that allows you to type using the colemak keyboard layout within Chrome. Using the colemak layout is only possible (in Windows) by accessing settings, which in some cases you may not be able to do; think of a computer in a public library.
+- [CodeLocker](https://github.com/boonecabaldev/CodeLocker): WinForms application with unbreakable User Interface that encryts (locks) a specified--or generated--code or password for a specified duration, afterwhich you can unlock it; this is called a time lock, or code lock. You can also specify a future date and time for the code lock to expires.
 
 ### Video(s)
 
-Here is a [video](https://youtu.be/Fdp2eefdvEs?si=s4MlpyCY_9wbNzoU) I did for [CodeMentor.io](https://codementor.io)
+- Here is a [video](https://youtu.be/Fdp2eefdvEs?si=s4MlpyCY_9wbNzoU) I did for [CodeMentor.io](https://codementor.io)
