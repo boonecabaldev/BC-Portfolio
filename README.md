@@ -41,3 +41,5 @@ These projects highlight my ability to design creative, functional software solu
 I'm a passionate developer with a knack for solving complex problems through clean code and thoughtful design. Whether I'm optimizing workflows with Vim, building intuitive web interfaces, or crafting tools to enhance productivity, I thrive on creating solutions that are both powerful and user-friendly.
 
 Feel free to explore my work, reach out for collaboration, or hire me for your next project via [CodeMentor](https://codementor.io) or [GitHub](https://github.com/boonecabaldev)!
+
+[![Contact me on Codementor](https://www.codementor.io/m-badges/boonecabal/im-a-cm-g.svg)](https://www.codementor.io/@boonecabal?refer=badge)
