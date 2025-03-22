@@ -21,7 +21,7 @@ Here are some other projects, which were very pleasurable.
 
 ### Software
 
-Here is a Chrome browser extension called [Colemak Popup](https://github.com/boonecabaldev/colemak-extension) 
+Here is a Chrome browser extension called [Colemak Popup](https://github.com/boonecabaldev/colemak-extension), which pops a dialog box that allows you to type using the colemak keyboard layout within Chrome. Using the colemak layout is only possible (in Windows) by accessing settings, which in some cases you may not be able to do; think of a computer in a public library.
 
 ### Video(s)
 
