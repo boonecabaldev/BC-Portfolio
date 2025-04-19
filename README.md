@@ -31,8 +31,10 @@ These projects highlight my ability to design creative, functional software solu
   A Chrome extension that enables Colemak keyboard layout typing via a popup dialog, ideal for users on restricted systems.
 - **[CodeLocker](https://github.com/boonecabaldev/CodeLocker)**  
   A secure WinForms app featuring a tamper-proof UI that encrypts codes or passwords with a time-based lock, unlocking them after a set duration or at a specified future date.
-- **[To-Colemak](https://github.com/boonecabaldev/To-Colemak)
+- **[To-Colemak](https://github.com/boonecabaldev/To-Colemak)**
   Another version of my Colemak Chrome browser extension. Pressing Ctrl+L simply changes the keyboard layout directly in the textbox. Still in beta.
+- **[BookScraper](https://github.com/boonecabaldev/BookScraper)**
+  Web scraper implemented as a Scrapy spider that extracts books from bookreadfree.com and saves them as formatted HTML pages.
 
 ### Video Content
 - **[CodeMentor.io Tutorial Video](https://youtu.be/Fdp2eefdvEs?si=s4MlpyCY_9wbNzoU)**  
