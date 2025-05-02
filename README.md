@@ -35,6 +35,8 @@ These projects highlight my ability to design creative, functional software solu
   Another version of my Colemak Chrome browser extension. Pressing Ctrl+L simply changes the keyboard layout directly in the textbox. Still in beta.
 - **[BookScraper](https://github.com/boonecabaldev/BookScraper)**
   Web scraper implemented as a Scrapy spider that extracts books from bookreadfree.com and saves them as formatted HTML pages.
+- **[NomiKeyHelper](https://github.com/boonecabaldev/NomiKeyHelper)**
+  Nomi Key Helper is a Chrome extension that adds IDE-style bracket autocompletion ((), [], "", **, __), smart navigation (Tab/Backspace handling), and visual feedback (colored highlights) to all text inputs.
 
 ### Video Content
 - **[CodeMentor.io Tutorial Video](https://youtu.be/Fdp2eefdvEs?si=s4MlpyCY_9wbNzoU)**  
