@@ -7,16 +7,19 @@ Welcome to my portfolio! Below, you'll find a curated selection of my technical 
 These articles dive deep into practical solutions and advanced techniques, designed to inspire and inform developers of all levels.
 
 ### Web Development
+
 - **[Crafting Stunning User Interfaces with Svelte and Material Design for Bootstrap 4 & 5 (MDB)](https://hackmd.io/@boonecabaldev/ByGiokbcR)**  
   Explore how to blend Svelte's lightweight power with MDB's sleek design to create responsive, visually appealing web applications.
 
 ### Linux
+
 - **[Building a Lightweight Dotfiles Repository](https://github.com/boonecabaldev/Articles/blob/main/LightweightDotfilesRepo.md)**  
   A step-by-step guide to creating a minimalist, modular dotfiles setup for streamlined Linux customization.
 - **[Mastering Custom Filters with `awk` and `sed` Pipelines on Ubuntu 20.04](https://github.com/boonecabaldev/Articles/blob/main/SedAwkPipelines.md)**  
   Learn to harness the power of `awk` and `sed` to build sophisticated text-processing pipelines for system administration tasks.
 
 ### Vim
+
 - **[Creating a DigitalOcean Markdown Vim Plugin](https://github.com/boonecabaldev/Articles/blob/main/DigitalOceanMarkdownVimPlugin.md)**  
   Discover how to craft a custom Vim plugin that streamlines DigitalOcean-style markdown creation with efficient mappings.
 - **[Mastering Vim: Buffers, Windows, and Beyond](https://github.com/boonecabaldev/Articles/blob/main/VimBuffersWindows.md)**  
@@ -27,18 +30,22 @@ These articles dive deep into practical solutions and advanced techniques, desig
 These projects highlight my ability to design creative, functional software solutions tailored to real-world needs.
 
 ### Software
+
+- **[AutoBracketExtension](https://github.com/boonecabaldev/AutoBracketExtension)**  
+  A browser extension that brings IDE-style auto-bracketing and textbox highlighting to all webpages. Features include automatic bracket/quote pair completion, smart cursor placement, special Tab and Backspace handling, and visual highlighting of active textboxes. Toggle features with a keyboard shortcut or extension icon, and enjoy a seamless, productive typing experience across the web.
+- **[Vocab Master](https://github.com/boonecabaldev/VocabCatalogViewer)**  
+  A browser extension for quickly searching, filtering, and copying vocabulary terms from a customizable word database. Features instant search, dynamic tag filtering, quick copy in custom formats, and a beautiful neon-inspired UI. Ideal for writers, editors, and language enthusiasts.
 - **[Colemak Popup](https://github.com/boonecabaldev/Colemak-Popup)**  
   A Chrome extension that enables Colemak keyboard layout typing via a popup dialog, ideal for users on restricted systems.
 - **[CodeLocker](https://github.com/boonecabaldev/CodeLocker)**  
   A secure WinForms app featuring a tamper-proof UI that encrypts codes or passwords with a time-based lock, unlocking them after a set duration or at a specified future date.
-- **[To-Colemak](https://github.com/boonecabaldev/To-Colemak)**
+- **[To-Colemak](https://github.com/boonecabaldev/To-Colemak)**  
   Another version of my Colemak Chrome browser extension. Pressing Ctrl+L simply changes the keyboard layout directly in the textbox. Still in beta.
-- **[BookScraper](https://github.com/boonecabaldev/BookScraper)**
+- **[BookScraper](https://github.com/boonecabaldev/BookScraper)**  
   Web scraper implemented as a Scrapy spider that extracts books from bookreadfree.com and saves them as formatted HTML pages.
-- **[NomiKeyHelper](https://github.com/boonecabaldev/NomiKeyHelper)**
-  Nomi Key Helper is a Chrome extension that adds IDE-style bracket autocompletion ((), [], "", **, __), smart navigation (Tab/Backspace handling), and visual feedback (colored highlights) to all text inputs.
 
 ### Video Content
+
 - **[CodeMentor.io Tutorial Video](https://youtu.be/Fdp2eefdvEs?si=s4MlpyCY_9wbNzoU)**  
   A walkthrough I created for [CodeMentor.io](https://codementor.io), demonstrating live coding techniques and problem-solving strategies.
 
