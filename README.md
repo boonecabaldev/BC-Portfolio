@@ -29,7 +29,7 @@ These articles dive deep into practical solutions and advanced techniques, desig
 
 These projects highlight my ability to design creative, functional software solutions tailored to real-world needs.
 
-### Software
+### Browser Extensions
 
 - **[AutoBracketExtension](https://github.com/boonecabaldev/AutoBracketExtension)**  
   A browser extension that brings IDE-style auto-bracketing and textbox highlighting to all webpages. Features include automatic bracket/quote pair completion, smart cursor placement, special Tab and Backspace handling, and visual highlighting of active textboxes. Toggle features with a keyboard shortcut or extension icon, and enjoy a seamless, productive typing experience across the web.
@@ -41,6 +41,9 @@ These projects highlight my ability to design creative, functional software solu
   A secure WinForms app featuring a tamper-proof UI that encrypts codes or passwords with a time-based lock, unlocking them after a set duration or at a specified future date.
 - **[To-Colemak](https://github.com/boonecabaldev/To-Colemak)**  
   Another version of my Colemak Chrome browser extension. Pressing Ctrl+L simply changes the keyboard layout directly in the textbox. Still in beta.
+
+### Python
+
 - **[BookScraper](https://github.com/boonecabaldev/BookScraper)**  
   Web scraper implemented as a Scrapy spider that extracts books from bookreadfree.com and saves them as formatted HTML pages.
 
