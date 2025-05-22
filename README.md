@@ -4,7 +4,7 @@ Welcome to my portfolio! Below, you'll find a curated selection of my technical 
 
 ## Technical Articles
 
-These articles dive deep into practical solutions and advanced techniques, designed to inspire and inform developers of all levels.
+These **[articles](https://dev.to/boonecabaldev)** dive deep into practical solutions and advanced techniques, designed to inspire and inform developers of all levels.
 
 ### Web Development
 
