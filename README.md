@@ -15,7 +15,7 @@ These **[articles](https://dev.to/boonecabaldev)** dive deep into practical solu
 
 - **[Building a Lightweight Dotfiles Repository](https://dev.to/boonecabal/how-to-create-a-lightweight-dotfiles-repository-28dh)**  
   A step-by-step guide to creating a minimalist, modular dotfiles setup for streamlined Linux customization.
-- **[Mastering Custom Filters with `awk` and `sed` Pipelines on Ubuntu 20.04](https://dev.to/boonecabal/how-to-create-a-lightweight-dotfiles-repository-28dh)**  
+- **[Mastering Custom Filters with `awk` and `sed` Pipelines on Ubuntu 20.04](https://dev.to/boonecabal/how-to-build-custom-filters-with-awk-and-sed-pipelines-on-ubuntu-2004-49ng)**  
   Learn to harness the power of `awk` and `sed` to build sophisticated text-processing pipelines for system administration tasks.
 
 ### Vim
