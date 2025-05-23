@@ -8,22 +8,22 @@ These **[articles](https://dev.to/boonecabaldev)** dive deep into practical solu
 
 ### Web Development
 
-- **[Crafting Stunning User Interfaces with Svelte and Material Design for Bootstrap 4 & 5 (MDB)](https://hackmd.io/@boonecabaldev/ByGiokbcR)**  
+- **[Crafting Stunning User Interfaces with Svelte and Material Design for Bootstrap 4 & 5 (MDB)](https://dev.to/boonecabal/creating-beautiful-user-interfaces-with-material-design-for-bootstrap-4-5-mdb-1lch)**  
   Explore how to blend Svelte's lightweight power with MDB's sleek design to create responsive, visually appealing web applications.
 
 ### Linux
 
-- **[Building a Lightweight Dotfiles Repository](https://github.com/boonecabaldev/Articles/blob/main/LightweightDotfilesRepo.md)**  
+- **[Building a Lightweight Dotfiles Repository](https://dev.to/boonecabal/how-to-create-a-lightweight-dotfiles-repository-28dh)**  
   A step-by-step guide to creating a minimalist, modular dotfiles setup for streamlined Linux customization.
-- **[Mastering Custom Filters with `awk` and `sed` Pipelines on Ubuntu 20.04](https://github.com/boonecabaldev/Articles/blob/main/SedAwkPipelines.md)**  
+- **[Mastering Custom Filters with `awk` and `sed` Pipelines on Ubuntu 20.04](https://dev.to/boonecabal/how-to-create-a-lightweight-dotfiles-repository-28dh)**  
   Learn to harness the power of `awk` and `sed` to build sophisticated text-processing pipelines for system administration tasks.
 
 ### Vim
 
+- **[Mastering Vim: Buffers, Windows, and Beyond](https://dev.to/boonecabal/mastering-vim-buffers-windows-and-your-text-editing-arsenal-28ai)**  
+  A hands-on tutorial demystifying Vim buffers and windows to supercharge your text-editing workflow.
 - **[Creating a DigitalOcean Markdown Vim Plugin](https://github.com/boonecabaldev/Articles/blob/main/DigitalOceanMarkdownVimPlugin.md)**  
   Discover how to craft a custom Vim plugin that streamlines DigitalOcean-style markdown creation with efficient mappings.
-- **[Mastering Vim: Buffers, Windows, and Beyond](https://github.com/boonecabaldev/Articles/blob/main/VimBuffersWindows.md)**  
-  A hands-on tutorial demystifying Vim buffers and windows to supercharge your text-editing workflow.
 
 ## Projects
 
