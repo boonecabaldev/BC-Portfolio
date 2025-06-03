@@ -11,6 +11,11 @@ These **[articles](https://dev.to/boonecabaldev)** dive deep into practical solu
 - **[Crafting Stunning User Interfaces with Svelte and Material Design for Bootstrap 4 & 5 (MDB)](https://dev.to/boonecabal/creating-beautiful-user-interfaces-with-material-design-for-bootstrap-4-5-mdb-1lch)**  
   Explore how to blend Svelte's lightweight power with MDB's sleek design to create responsive, visually appealing web applications.
 
+### Browser Extensions
+
+- **[How to Rapidly Building Browser Extensions With AN](https://dev.to/boonecabal/how-to-rapidly-build-browser-extensions-with-ai-1ml6)**  
+  This tutorial walks through creating a browser extension that highlights text on a webpage using AI-generated code. It demonstrates how to leverage AI tools like Google Gemini and DeepSeek to streamline development, solve bugs, and enhance functionality step by step.
+
 ### Linux
 
 - **[Building a Lightweight Dotfiles Repository](https://dev.to/boonecabal/how-to-create-a-lightweight-dotfiles-repository-28dh)**  
