@@ -13,6 +13,9 @@ These **[articles](https://dev.to/boonecabaldev)** dive deep into practical solu
 
 ### Browser Extensions
 
+- **[Colemak Keyboard Layout Browser Extension](https://dev.to/boonecabal/changing-keyboard-layouts-lets-build-a-browser-extension-5ca6)**
+  This article talks about how to build a browser extension that allows you to change the keyboard layout to Colemak.
+
 - **[How to Rapidly Building Browser Extensions With AN](https://dev.to/boonecabal/how-to-rapidly-build-browser-extensions-with-ai-1ml6)**  
   This tutorial walks through creating a browser extension that highlights text on a webpage using AI-generated code. It demonstrates how to leverage AI tools like Google Gemini and DeepSeek to streamline development, solve bugs, and enhance functionality step by step.
 
