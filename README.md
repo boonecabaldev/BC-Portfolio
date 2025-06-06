@@ -30,7 +30,7 @@ These **[articles](https://dev.to/boonecabaldev)** dive deep into practical solu
 
 - **[Mastering Vim: Buffers, Windows, and Beyond](https://dev.to/boonecabal/mastering-vim-buffers-windows-and-your-text-editing-arsenal-28ai)**  
   A hands-on tutorial demystifying Vim buffers and windows to supercharge your text-editing workflow.
-- **[Creating a DigitalOcean Markdown Vim Plugin](https://github.com/boonecabaldev/Articles/blob/main/DigitalOceanMarkdownVimPlugin.md)**  
+- **[Creating a DigitalOcean Markdown Vim Plugin](https://dev.to/boonecabal/how-to-make-digitalocean-markdown-vim-plugin-3cja)**  
   Discover how to craft a custom Vim plugin that streamlines DigitalOcean-style markdown creation with efficient mappings.
 
 ## Projects
