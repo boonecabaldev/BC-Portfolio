@@ -1,4 +1,4 @@
-# Boone Cabal's Software Development Portfolio
+# Portfolio of Boone Cabal
 
 Welcome to my portfolio! Below, you'll find a curated selection of my technical articles and projects that showcase my expertise in web development, Linux, Vim, and innovative software solutions. Each piece reflects my passion for crafting efficient, elegant, and practical tools for developers and users alike.
 
