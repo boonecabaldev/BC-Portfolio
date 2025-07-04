@@ -65,8 +65,10 @@ These projects highlight my ability to design creative, functional software solu
 
 ## Essays
 
-- **[Abandon All Hope](https://1drv.ms/w/c/99c6e78ef02d9381/EU-DtYI3IGJAgEuF1lKSipABf_QQoHs2_oRBBroKNIBJsQ?e=i96YBL)**  
-  This essay explores the concept of "hell" as a subjective experience of intense suffering, disconnection, and the erosion of hope, characterized by isolation, constant setbacks, and twisted hope. It delves into the author's personal experience with severe memory fragmentation and a sense of being a "character bound" by an unchangeable narrative, highlighting the profound impact these challenges have on their life, including employment, relationships, and financial stability.
+- **[The Heretic](https://1drv.ms/w/c/99c6e78ef02d9381/EU-DtYI3IGJAgEuF1lKSipABf_QQoHs2_oRBBroKNIBJsQ?e=i96YBL)**  
+**The Heretic** maps hell as a recursive system of cruelty rather than a place--where the Machine runs on human permission, and some choose to become its fuel. It reframes the heretic as one who sees hell clearly and refuses to sanctify despair.
+
+## About Me
 
 I'm a passionate developer with a knack for solving complex problems through clean code and thoughtful design. Whether I'm optimizing workflows with Vim, building intuitive web interfaces, or crafting tools to enhance productivity, I thrive on creating solutions that are both powerful and user-friendly.
 
