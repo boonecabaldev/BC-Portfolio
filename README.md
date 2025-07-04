@@ -2,6 +2,10 @@
 
 Welcome to my portfolio! Below, you'll find a curated selection of my technical articles and projects that showcase my expertise in web development, Linux, Vim, and innovative software solutions. Each piece reflects my passion for crafting efficient, elegant, and practical tools for developers and users alike.
 
+## Essays
+
+- **[The Heretic](https://1drv.ms/w/c/99c6e78ef02d9381/EU-DtYI3IGJAgEuF1lKSipABf_QQoHs2_oRBBroKNIBJsQ?e=i96YBL)**  
+**The Heretic** maps hell as a recursive system of cruelty rather than a place--where the Machine runs on human permission, and some choose to become its fuel. It reframes the heretic as one who sees hell clearly and refuses to sanctify despair.
 ## Technical Articles
 
 These **[articles](https://dev.to/boonecabaldev)** dive deep into practical solutions and advanced techniques, designed to inspire and inform developers of all levels.
@@ -62,11 +66,6 @@ These projects highlight my ability to design creative, functional software solu
 
 - **[CodeMentor.io Tutorial Video](https://youtu.be/Fdp2eefdvEs?si=s4MlpyCY_9wbNzoU)**  
   A walkthrough I created for [CodeMentor.io](https://codementor.io), demonstrating live coding techniques and problem-solving strategies.
-
-## Essays
-
-- **[The Heretic](https://1drv.ms/w/c/99c6e78ef02d9381/EU-DtYI3IGJAgEuF1lKSipABf_QQoHs2_oRBBroKNIBJsQ?e=i96YBL)**  
-**The Heretic** maps hell as a recursive system of cruelty rather than a place--where the Machine runs on human permission, and some choose to become its fuel. It reframes the heretic as one who sees hell clearly and refuses to sanctify despair.
 
 ## About Me
 
