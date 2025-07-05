@@ -32,7 +32,7 @@ Here are some of my smaller AI projects.
   
 ## Software Development
 
-### Video Content
+### Video
 
 - **[CodeMentor.io Tutorial Video](https://youtu.be/Fdp2eefdvEs?si=s4MlpyCY_9wbNzoU)**  
 
