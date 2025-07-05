@@ -30,17 +30,25 @@ Here are some of my smaller AI projects.
 
   A document providing detailed instructions on how to use the two Character.AI profile generation scripts described above.
   
-## Technical Articles
+## Software Development
+
+### Video Content
+
+- **[CodeMentor.io Tutorial Video](https://youtu.be/Fdp2eefdvEs?si=s4MlpyCY_9wbNzoU)**  
+
+  A walkthrough I created for [CodeMentor.io](https://codementor.io), demonstrating live coding techniques and problem-solving strategies.
+
+### Articles
 
 These **[articles](https://dev.to/boonecabaldev)** dive deep into practical solutions and advanced techniques, designed to inspire and inform developers of all levels.
 
-### Web Development
+#### Web Development
 
 - **[Crafting Stunning User Interfaces with Svelte and Material Design for Bootstrap 4 & 5 (MDB)](https://dev.to/boonecabal/creating-beautiful-user-interfaces-with-material-design-for-bootstrap-4-5-mdb-1lch)**  
   
   Explore how to blend Svelte's lightweight power with MDB's sleek design to create responsive, visually appealing web applications.
 
-### Browser Extensions
+#### Browser Extensions
 
 - **[Colemak Keyboard Layout Browser Extension](https://dev.to/boonecabal/changing-keyboard-layouts-lets-build-a-browser-extension-5ca6)**
   
@@ -50,7 +58,7 @@ These **[articles](https://dev.to/boonecabaldev)** dive deep into practical solu
 
   This tutorial walks through creating a browser extension that highlights text on a webpage using AI-generated code. It demonstrates how to leverage AI tools like Google Gemini and DeepSeek to streamline development, solve bugs, and enhance functionality step by step.
 
-### Linux
+#### Linux
 
 - **[Building a Lightweight Dotfiles Repository](https://dev.to/boonecabal/how-to-create-a-lightweight-dotfiles-repository-28dh)**  
   
@@ -60,7 +68,7 @@ These **[articles](https://dev.to/boonecabaldev)** dive deep into practical solu
 
   Learn to harness the power of `awk` and `sed` to build sophisticated text-processing pipelines for system administration tasks.
 
-### Vim
+#### Vim
 
 - **[Mastering Vim: Buffers, Windows, and Beyond](https://dev.to/boonecabal/mastering-vim-buffers-windows-and-your-text-editing-arsenal-28ai)**  
 
@@ -70,11 +78,11 @@ These **[articles](https://dev.to/boonecabaldev)** dive deep into practical solu
   
   Discover how to craft a custom Vim plugin that streamlines DigitalOcean-style markdown creation with efficient mappings.
 
-## Projects
+### Projects
 
 These projects highlight my ability to design creative, functional software solutions tailored to real-world needs.
 
-### Browser Extensions
+#### Browser Extensions
 
 - **[AutoBracketExtension](https://github.com/boonecabaldev/AutoBracketExtension)**  
 
@@ -92,23 +100,17 @@ These projects highlight my ability to design creative, functional software solu
 
   Another version of my Colemak Chrome browser extension. Pressing Ctrl+L simply changes the keyboard layout directly in the textbox. Still in beta.
 
-### Microsoft .NET
+#### Microsoft .NET
 
 - **[CodeLocker](https://github.com/boonecabaldev/CodeLocker)**  
 
   A secure WinForms app featuring a tamper-proof UI that encrypts codes or passwords with a time-based lock, unlocking them after a set duration or at a specified future date.
 
-### Python
+#### Python
 
 - **[BookScraper](https://github.com/boonecabaldev/BookScraper)**  
 
   Web scraper implemented as a Scrapy spider that extracts books from bookreadfree.com and saves them as formatted HTML pages.
-
-### Video Content
-
-- **[CodeMentor.io Tutorial Video](https://youtu.be/Fdp2eefdvEs?si=s4MlpyCY_9wbNzoU)**  
-
-  A walkthrough I created for [CodeMentor.io](https://codementor.io), demonstrating live coding techniques and problem-solving strategies.
 
 ## About Me
 
