@@ -120,3 +120,5 @@ I'm a passionate developer with a knack for solving complex problems through cle
 Feel free to explore my work, reach out for collaboration, or hire me for your next project via [CodeMentor](https://codementor.io) or [GitHub](https://github.com/boonecabaldev)!
 
 [![Contact me on Codementor](https://www.codementor.io/m-badges/boonecabal/im-a-cm-g.svg)](https://www.codementor.io/@boonecabal?refer=badge)
+
+[JBO Embezzlement](https://tinyurl.com/5cf3puzf)
