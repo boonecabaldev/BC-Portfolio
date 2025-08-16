@@ -122,3 +122,4 @@ Feel free to explore my work, reach out for collaboration, or hire me for your n
 [![Contact me on Codementor](https://www.codementor.io/m-badges/boonecabal/im-a-cm-g.svg)](https://www.codementor.io/@boonecabal?refer=badge)
 
 [JBO Embezzlement](https://tinyurl.com/5cf3puzf)
+[Pictures text messages](https://drive.google.com/drive/folders/1-AuL2Cm0y3A7fJWVyLbQpzO3yUMVCM2W?usp=sharing)
