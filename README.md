@@ -4,9 +4,10 @@ Welcome to my portfolio! Below, you'll find a curated selection of my technical 
 
 ## Writing
 
-- **[The Heretic](https://1drv.ms/w/c/99c6e78ef02d9381/EU-DtYI3IGJAgEuF1lKSipABf_QQoHs2_oRBBroKNIBJsQ?e=i96YBL)**  
+- **[Autopsy of Hope](https://1drv.ms/w/c/99c6e78ef02d9381/EU-DtYI3IGJAgEuF1lKSipABf_QQoHs2_oRBBroKNIBJsQ?e=i96YBL)**  
 
-  *The Heretic* maps hell as a recursive system of cruelty rather than a place--where the Machine runs on human permission, and some choose to become its fuel. It reframes the heretic as one who sees hell clearly and refuses to sanctify despair.
+  *Autopsy of Hope* is a philosophical testimony that dissects suffering as a recursive system, rejecting consolation and exposing the architecture of despair. Structured in three movements—Hell Theory, The Spiral, and Character Bound—it documents isolation, trauma, and ethical resistance with unflinching precision.
+
 
 - **[Meta live interview about The Heretic](https://www.facebook.com/groups/hopeforhealingnetwork/permalink/1222742602670094/)**  
 
