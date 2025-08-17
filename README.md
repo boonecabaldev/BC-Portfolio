@@ -11,7 +11,7 @@ Welcome to my portfolio! Below, you'll find a curated selection of my technical 
 
 - **[Meta live interview about Autopsy of Hope](https://www.facebook.com/groups/hopeforhealingnetwork/permalink/1222742602670094/)**  
 
-  This was a live interview that I did with the Facebook group *Hope for Healing Network*, covering sections I and II of *The Heretic*.
+  This was a live interview that I did with the Facebook group *Hope for Healing Network*, covering sections I and II of *Tm Autopsy of Hope*.
 
 ## AI
 
