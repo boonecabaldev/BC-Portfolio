@@ -4,7 +4,7 @@ Welcome to my portfolio! Below, you'll find a curated selection of my technical 
 
 ## Writing
 
-- **[Autopsy of Hope](https://1drv.ms/w/c/99c6e78ef02d9381/EeIA3mEzRwZCr7SRwR6_7gkBEzUUAoL_dLuv_JygKgcJog)**  
+- **[Autopsy of Hope on Substack](https://open.substack.com/pub/dorkzeegler/p/autopsy-of-hope?r=6bn4ev&utm_medium=ios)**  
 
   *Autopsy of Hope* is a philosophical testimony that dissects suffering as a recursive system, rejecting consolation and exposing the architecture of despair. Structured in three movements—Hell Theory, The Spiral, and Character Bound—it documents isolation, trauma, and ethical resistance with unflinching precision.
 
