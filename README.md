@@ -4,12 +4,12 @@ Welcome to my portfolio! Below, you'll find a curated selection of my technical 
 
 ## Writing
 
-- **[Autopsy of Hope](https://1drv.ms/w/c/99c6e78ef02d9381/EU-DtYI3IGJAgEuF1lKSipABf_QQoHs2_oRBBroKNIBJsQ?e=i96YBL)**  
+- **[Autopsy of Hope](https://1drv.ms/w/c/99c6e78ef02d9381/EeIA3mEzRwZCr7SRwR6_7gkBEzUUAoL_dLuv_JygKgcJog)**  
 
   *Autopsy of Hope* is a philosophical testimony that dissects suffering as a recursive system, rejecting consolation and exposing the architecture of despair. Structured in three movements—Hell Theory, The Spiral, and Character Bound—it documents isolation, trauma, and ethical resistance with unflinching precision.
 
 
-- **[Meta live interview about The Heretic](https://www.facebook.com/groups/hopeforhealingnetwork/permalink/1222742602670094/)**  
+- **[Meta live interview about Autopsy of Hope](https://www.facebook.com/groups/hopeforhealingnetwork/permalink/1222742602670094/)**  
 
   This was a live interview that I did with the Facebook group *Hope for Healing Network*, covering sections I and II of *The Heretic*.
 
