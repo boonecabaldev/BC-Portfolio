@@ -13,6 +13,14 @@ Welcome to my portfolio! Below, you'll find a curated selection of my technical 
 
   This was a live interview that I did with the Facebook group *Hope for Healing Network*, covering sections I and II of *Tm Autopsy of Hope*.
 
+- **[Hell Theory: The Mathematics of Despair](https://open.substack.com/pub/boonecabal/p/hell-theory?r=6bn4ev&utm_medium=ios)**
+
+  *Hell Theory: The Mathematics of Despair* exposes how treatment-resistant suffering evolves into recursive systems that punish effort and replicate failure. It reframes despair not as emotional collapse, but as a mathematically structured indictment of the systems that refuse to solve.
+
+- **[The Ghost Diagnosis](https://open.substack.com/pub/boonecabal/p/the-ghost-diagnosis?r=6bn4ev&utm_medium=ios)**
+
+  *The Ghost Diagnosis* exposes the brutal architecture of suffering that lacks medical recognition, detailing how undiagnosed individuals are systematically invalidated, gaslit, and exiled from both care and community. Through recursive metaphors and case study, it reveals how disbelief itself becomes a fractal—multiplying trauma, eroding credibility, and exhausting hope.
+
 ## AI
 
 Here are some of my smaller AI projects.
